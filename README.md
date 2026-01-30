@@ -45,8 +45,6 @@ git pull origin master
 ```
 
 ## 2. Mise en place des Modèles et Migration
-
-### 2.1 Mise en place de la migration
 Création de la branche Git "Migration-ShortUrl"
 ```bash
 git checkout -b Migration-ShortUrl
