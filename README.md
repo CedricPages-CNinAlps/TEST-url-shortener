@@ -67,3 +67,28 @@ $table->text('original_url');
 ```
 
 ### 2.2 Modèle
+Nous mettons ensuite en place le modèle ci-dessous :
+```
+class ShortUrl extends Model
+{
+    // Ajoute le trait permettant d’utiliser des factories pour ce modèle, utile pour les tests, les seeders.
+    use HasFactory;
+    
+    // Déclare quels champs peuvent être remplis en assignation de masse
+    protected $fillable = [
+       'user_id',
+       'code',
+       'original_url' 
+    ];
+    
+    //  Cette méthode déclare une relation Many-to-One : chaque ShortUrl appartient à un User.
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+}
+```
+
+### 2.3 Lancement de la migration
+```bash
+php artisan migrate
+```
