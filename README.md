@@ -205,3 +205,8 @@ Pour un bon fonctionnement du système, je viens éditer mes routes pour mes dif
 ```
 
 ### 3.3 Mise en place des views
+
+Pour ce faire nous crérons 3 views :
+- index.blade.php : qui affiche les informations sur nos URLs ;
+- create.blade.php : qui permettra de créé une url ; 
+- edite.blade.php : qui affiche l'url existante, que l'on pourra remplace.

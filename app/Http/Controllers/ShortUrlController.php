@@ -7,20 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Random\RandomException;
 
-/**
- * @method middleware(\Closure $param)
- * @method authorizeForUser($id, string $string, ShortUrl $shortUrl)
- */
 class ShortUrlController extends Controller
 {
     protected $user;  // Variable accessible dans TOUTES les méthodes
 
     public function __construct()
     {
-        $this->middleware(function ($request, $next) {
-            $this->user = Auth::user();
-            return $next($request);
-        });
+            return $this->user = Auth::user();
     }
     public function index()
     {
@@ -36,14 +29,16 @@ class ShortUrlController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-           'original_url' => ['required', 'url'],
+           'original_url' => 'required|url',
         ]);
 
         do {
           $code = $this->random();
-        } while (ShortUrl::where('code',$code)->exists());
+        } while (
+            ShortUrl::where('code',$code)->exists()
+        );
 
-        ShortUrl::created([
+        ShortUrl::create([
             'user_id' => $this->user->id,
             'code' => $code,
             'original_url' => $request->input('original_url'),
@@ -59,15 +54,17 @@ class ShortUrlController extends Controller
         }
     }
 
-    public function edit(ShortUrl $shortUrl)
+    public function edit(ShortUrl $shortUrl, $id)
     {
-        $this->authorizeForUser($this->user->id, 'update', $shortUrl);
+        // Vérifie que l'URL appartient bien à l'utilisateur connecté
+        $shortUrl = ShortUrl::where('user_id', $this->user->id)->findOrFail($id);
+
         return view('shorturls.edit', compact('shortUrl'));
     }
 
-    public function update(Request $request,ShortUrl $shortUrl)
+    public function update(Request $request,$id)
     {
-        $this->authorizeForUser($this->user->id, 'update', $shortUrl);
+        $shortUrl = ShortUrl::findOrFail($id);
         $request->validate([
             'original_url' => ['required', 'url'],
         ]);
@@ -79,9 +76,9 @@ class ShortUrlController extends Controller
         return redirect()->route('shorturls.index')->with('status','Lien mis à jour.');
     }
 
-    public function destroy(ShortUrl $shortUrl)
+    public function destroy(ShortUrl $shortUrl, $id)
     {
-        $this->authorizeForUser($this->user->id, 'delete', $shortUrl);
+        $shortUrl = ShortUrl::where('user_id', $this->user->id)->findOrFail($id);
         $shortUrl->delete();
         return redirect()->route('shorturls.index')->with('status','Lien supprimé.');
     }
