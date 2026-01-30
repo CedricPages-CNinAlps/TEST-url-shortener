@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShortUrlController;
+use App\Http\Controllers\RedirectController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -24,5 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/shorturls/{shorturl}',[ShortUrlController::class, 'update'])->name('shorturls.update');
     Route::delete('/shorturls/{shorturl}',[ShortUrlController::class, 'destroy'])->name('shorturls.destroy');
 });
+
+Route::get('/r/{code}', [RedirectController::class, 'redirect'])->name('shorturls.redirect');
 
 require __DIR__.'/auth.php';

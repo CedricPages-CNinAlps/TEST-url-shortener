@@ -68,6 +68,8 @@
                 </tbody>
             </table>
 
+            <div>{{ $shortUrls->links() }}</div>
+
             @push('scripts')
             <script>
                 document.addEventListener('DOMContentLoaded', function() {

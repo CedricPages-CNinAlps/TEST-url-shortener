@@ -9,7 +9,7 @@ use Random\RandomException;
 
 class ShortUrlController extends Controller
 {
-    protected $user;  // Variable accessible dans TOUTES les méthodes
+    protected $user;
 
     public function __construct()
     {
@@ -56,9 +56,7 @@ class ShortUrlController extends Controller
 
     public function edit(ShortUrl $shortUrl, $id)
     {
-        // Vérifie que l'URL appartient bien à l'utilisateur connecté
         $shortUrl = ShortUrl::where('user_id', $this->user->id)->findOrFail($id);
-
         return view('shorturls.edit', compact('shortUrl'));
     }
 

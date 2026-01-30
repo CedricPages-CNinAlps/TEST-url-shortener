@@ -113,11 +113,8 @@ Mise en place des méthodes suivantes :
 
     public function __construct()
     {
-        $this->middleware(function ($request, $next) {
-        // Chargée UNE SEULE FOIS
-            $this->user = Auth::user();  
-            return $next($request);
-        });
+            // Charger une seul fois
+            return $this->user = Auth::user();
     }
     
 # Affichige des urls créé par l'utilisateur
@@ -139,7 +136,7 @@ Mise en place des méthodes suivantes :
         $request->validate([
            'original_url' => ['required', 'url'],
         ]);
-
+        
         do {
           $code = $this->random();
         } while (ShortUrl::where('code',$code)->exists());
@@ -163,16 +160,17 @@ Mise en place des méthodes suivantes :
     }
 
 # Edition d'une shorturl
-    public function edit(ShortUrl $shortUrl)
+   public function edit(ShortUrl $shortUrl, $id)
     {
-        $this->authorizeForUser($this->user->id, 'update', $shortUrl);
+        // Vérifie que l'URL appartient bien à l'utilisateur connecté
+        $shortUrl = ShortUrl::where('user_id', $this->user->id)->findOrFail($id);
         return view('shorturls.edit', compact('shortUrl'));
     }
 
 # Mise à jour d'une url d'origine
-    public function update(Request $request,ShortUrl $shortUrl)
+public function update(Request $request,$id)
     {
-        $this->authorizeForUser($this->user->id, 'update', $shortUrl);
+        $shortUrl = ShortUrl::findOrFail($id);
         $request->validate([
             'original_url' => ['required', 'url'],
         ]);
@@ -185,9 +183,9 @@ Mise en place des méthodes suivantes :
     }
 
 # Suppression d'une url
-    public function destroy(ShortUrl $shortUrl)
+    public function destroy(ShortUrl $shortUrl, $id)
     {
-        $this->authorizeForUser($this->user->id, 'delete', $shortUrl);
+        $shortUrl = ShortUrl::where('user_id', $this->user->id)->findOrFail($id);
         $shortUrl->delete();
         return redirect()->route('shorturls.index')->with('status','Lien supprimé.');
     }
@@ -206,7 +204,65 @@ Pour un bon fonctionnement du système, je viens éditer mes routes pour mes dif
 
 ### 3.3 Mise en place des views
 
-Pour ce faire nous crérons 3 views :
+Pour ce faire nous faisons 3 views :
 - index.blade.php : qui affiche les informations sur nos URLs ;
 - create.blade.php : qui permettra de créé une url ; 
 - edite.blade.php : qui affiche l'url existante, que l'on pourra remplace.
+
+### 3.4 Controller de redirection
+
+#### 3.4.1 Controller
+Maintenant que nous avons une url raccourcis, nous allons faire une nouveau controller qui permettra la gestion des redirections.
+```bash
+php artisan make:controller RedirectController
+```
+
+Mise en place de la méthode suivante :
+```
+public function redirect(string $code)
+    {
+        $shortUrl = ShortUrl::withTrashed()
+            ->where('code', $code)
+            ->first();
+        
+        // Lien non trouvé
+        if (! $shortUrl) {
+            abort(404);
+        }
+        
+        // Lien supprimé => page spécifique
+        if ($shortUrl->trashed()) {
+            return response()->view('shorturls.deleted', compact('shortUrl'),410);
+        }
+        
+        return redirect()->away($shortUrl->original_url);
+    }
+```
+
+#### 3.4.2 Mise en place d'une route publique
+```
+Route::get('/r/{code}', [RedirectController::class, 'redirect'])->name('shorturls.redirect');
+```
+
+#### 3.4.3 Création d'une view lien plus valable
+Nous faisons une view deleted.blade.php complémentaire.
+
+#### 3.4.4 Mise en place d'un champ 'deleted_at' dans ma table short_urls
+Afin d'avoir un bon fonctionnement des redirections, nous ajoutons la notion de SoftDeletes.
+- Modification du model ShortUrl en ajoutant :
+```
+use Illuminate\Database\Eloquent\SoftDeletes;
+use HasFactory, SoftDeletes;
+```
+- Ensuite, création d'une nouvelle migration, pour l'intégration du champ 'deleted_at' :
+```
+php artisan make:migration add_deleted_at_to_short_urls_table --table=short_url
+php artisan migrate
+```
+
+A ce stade, nous avons un projet répondant au cahier des charges primaire :
+- Zone d'administration avec création d'un compte ou connection ;
+- Un tableau affichant les liens courts et pagination ;
+- Possibilité de copier le lien court ;
+- Gestion des liens, ajout, suppression et édition ;
+- Redirection de l'URL avec endpoint fonctionnel.
