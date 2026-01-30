@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\ShortUrl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Psy\Util\Str;
 use Random\RandomException;
 
 /**
