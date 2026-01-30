@@ -18,7 +18,7 @@ class ShortUrlController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            $this->user = Auth::user();  // Chargée UNE SEULE FOIS
+            $this->user = Auth::user();
             return $next($request);
         });
     }

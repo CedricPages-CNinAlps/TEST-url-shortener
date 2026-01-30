@@ -93,12 +93,115 @@ class ShortUrl extends Model
 php artisan migrate
 ```
 
-## 3. Mise en place du contrôleur
+## 3. Mise en place du contrôleur, routes et views
 Création de la branche Git "Controller-ShortUrl"
 ```bash
 git checkout -b Controller-ShortUrl
 ```
+
+### 3.1 Controller ShortUrlController
 Pour la création du contrôleur, on vient créer cela via la ligne de commande suivante :
 ```bash
 php artisan make:controller ShortUrlController
 ```
+
+Mise en place des méthodes suivantes :
+````
+# Globalisation de la variable d'appel du User Authentifié
+    // Variable accessible dans TOUTES les méthodes ce qui permets de reduire les nombre d'appel
+    protected $user;
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+        // Chargée UNE SEULE FOIS
+            $this->user = Auth::user();  
+            return $next($request);
+        });
+    }
+    
+# Affichige des urls créé par l'utilisateur
+     public function index()
+    {
+        $shortUrls = ShortUrl::where('user_id', $this->user->id)->orderByDesc('created_at')->paginate(10);
+        return view('shorturls.index', compact('shortUrls'));
+    }
+
+# Création d'une shorturl
+    public function create()
+    {
+        return view('shorturls.create');
+    }
+
+# Enregistrement d'une shorturl
+    public function store(Request $request)
+    {
+        $request->validate([
+           'original_url' => ['required', 'url'],
+        ]);
+
+        do {
+          $code = $this->random();
+        } while (ShortUrl::where('code',$code)->exists());
+
+        ShortUrl::created([
+        // Lie l'information créé au USER connecté
+            'user_id' => $this->user->id,
+            'code' => $code,
+            'original_url' => $request->input('original_url'),
+        ]);
+
+        return redirect()->route('shorturls.index')->with('status','Lien raccourci créé avec succès.');
+    }
+
+# Création d'un chiffre unique pour la shorturl
+    public function random(){
+        try {
+            return str_pad(random_int(100000, 999999), 6, '0', STR_PAD_LEFT);
+        } catch (RandomException $e) {
+        }
+    }
+
+# Edition d'une shorturl
+    public function edit(ShortUrl $shortUrl)
+    {
+        $this->authorizeForUser($this->user->id, 'update', $shortUrl);
+        return view('shorturls.edit', compact('shortUrl'));
+    }
+
+# Mise à jour d'une url d'origine
+    public function update(Request $request,ShortUrl $shortUrl)
+    {
+        $this->authorizeForUser($this->user->id, 'update', $shortUrl);
+        $request->validate([
+            'original_url' => ['required', 'url'],
+        ]);
+
+        $shortUrl->update([
+            'original_url' => $request->input('original_url'),
+        ]);
+
+        return redirect()->route('shorturls.index')->with('status','Lien mis à jour.');
+    }
+
+# Suppression d'une url
+    public function destroy(ShortUrl $shortUrl)
+    {
+        $this->authorizeForUser($this->user->id, 'delete', $shortUrl);
+        $shortUrl->delete();
+        return redirect()->route('shorturls.index')->with('status','Lien supprimé.');
+    }
+````
+
+### 3.2 Création des routes
+Pour un bon fonctionnement du système, je viens éditer mes routes pour mes différentes méthodes :
+```
+    Route::get('/shorturls',[ShortUrlController::class, 'index'])->name('shorturls.index');
+    Route::get('/shorturls/create',[ShortUrlController::class, 'create'])->name('shorturls.create');
+    Route::post('/shorturls/store',[ShortUrlController::class, 'store'])->name('shorturls.store');
+    Route::get('/shorturls/{shorturl}/edit',[ShortUrlController::class, 'edit'])->name('shorturls.edit');
+    Route::put('/shorturls/{shorturl}',[ShortUrlController::class, 'update'])->name('shorturls.update');
+    Route::delete('/shorturls/{shorturl}',[ShortUrlController::class, 'destroy'])->name('shorturls.destroy');
+```
+
+### 3.3 Mise en place des views
