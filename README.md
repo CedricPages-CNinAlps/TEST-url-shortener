@@ -37,3 +37,9 @@ php artisan breeze:install blade
 npm install
 php artisan migrate
 ```
+Dans PHPStorm, j'utilise l'outil de création d'une "Pull resquest" et merge de celle-ci dans la branch "master".
+Et retour sur la branche d'origine et j'importe les développements.
+```bash
+git checkout master
+git pull origin master
+```
