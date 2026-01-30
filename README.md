@@ -263,12 +263,180 @@ php artisan migrate
 A ce stade, nous avons un projet répondant au cahier des charges primaire :
 - Zone d'administration avec création d'un compte ou connection ;
 - Un tableau affichant les liens courts et pagination ;
-- Possibilité de copier le lien court ;
+- Possibilité de copier le lien court (BONUS) ;
 - Gestion des liens, ajout, suppression et édition ;
-- Redirection de l'URL avec endpoint fonctionnel.
+- Redirection de l'URL avec endpoint fonctionnel ;
+- Les liens supprimés n'affiche pas une 404 (BONUS).
 
 ## 4. Mise en place des tests unitaires / fonctionnels
 Création de la branche Git "Tests-ShortUrl"
 ```bash
 git checkout -b Tests-ShortUrl
 ```
+
+### 4.1 Tests zone d'administration
+Pour ce faire, nous allons déjà créer un test de Feature via :
+```bash
+php artisan make:test ShortUrlTest
+```
+
+J'édite 3 tests
+```
+# Test 1 : Accès invité au dashboard
+Ce que ça teste : Un utilisateur non connecté qui essaie d'accéder à /dashboard est redirigé vers /login.
+
+    public function test_guest_cannot_access_dashboard(): void
+    {
+        $this->get('/dashboard')
+        ->assertRedirect('/login');;
+    }
+```
+
+```
+# Test 2 : Création d'une ShortUrl
+Ce que ça teste : Un utilisateur connecté peut créer une shortUrl.
+User::factory()->create() : crée un utilisateur fictif en BDD
+actingAs($user) : simule une connexion avec cet utilisateur
+post('/shorturls', [...]) : simule un POST avec les données du formulaire
+
+    public function test_user_can_create_short_url(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)
+            ->post('/shorturls', [
+                'original_url' => 'https://www.exemple.com'
+            ]);
+
+        $response->assertRedirect('/shorturls');
+        $this->assertDatabaseCount('short_urls',1);
+        $this->assertDatabaseHas('short_urls',[
+            'user_id' => $user->id,
+            'original_url' => 'https://www.exemple.com'
+        ]);
+    }
+```
+
+```
+# Test 3 : Isolation des données utilisateur
+Ce que ça teste : User1 ne voit QUE ses propres liens, pas ceux de User2.
+Crée 2 users + 1 ShortUrl chacun
+Se connecte comme User1 et fait un GET /shorturls
+
+    public function test_user_can_sees_only_own_links(): void
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        ShortUrl::factory()->create(['user_id' => $user1->id]);
+        ShortUrl::factory()->create(['user_id' => $user2->id]);
+
+        $response = $this->actingAs($user1)
+            ->post('/shorturls');
+
+        $response->assertStatus(200);
+        $this->assertEquals(1,$response->viewData('shortUrls')->count());
+    }
+```
+
+### 4.2 Test pour la redirection
+Pour ce faire, nous allons déjà créer un test de Feature via :
+```bash
+php artisan make:test RedirectTest
+```
+
+J'édite 3 tests
+```
+#Test 1 : Redirection vers l'URL originale
+Ce que ça teste : Quand on clique sur /r/123456, on est redirigé vers https://exemple.com.
+
+    public function test_redirects_to_original_url(): void
+    {
+        $short = ShortUrl::factory()->create([
+            'original_url' => 'https://exemple.com',
+            'code' => 123456,
+        ]);
+
+        $response = $this->get('/r/123456');
+
+        $response->assertRedirect('https://exemple.com');
+        $this->assertDatabaseHas('short_urls',[
+            'id' => $short->id,
+        ]);
+    }
+```
+
+```
+# Test 2 : 404 si code inexistant
+Ce que ça teste : Si le code n'existe pas en base → erreur 404 Not Found.
+
+    public function test_returns_404_when_not_found(): void
+    {
+        $this->get('/r/UNKNOWN')->assertStatus(404);
+    }
+```
+
+```
+#Test 3 : 410 si lien supprimé 
+Ce que ça teste : Si quelqu'un essaie d'accéder à un lien supprimé → statut 410 Gone (meilleur que 404 pour les liens supprimés).
+
+    public function test_deleted_link_shows_deleted_page(): void
+    {
+        $short = ShortUrl::factory()->create([
+            'original_url' => 'https://exemple.com',
+            'code' => 123456,
+        ]);
+
+        $short->delete();
+        $this->get('/r/123456')->assertStatus(410);
+    }
+```
+
+### 4.3 Factory pour ShortUrl
+Pour ce faire, nous allons déjà créer un test de Factory via :
+```bash
+php artisan make:factory ShortUrlFactory --model=ShortUrl
+```
+
+J'édite le factory suivant :
+```
+class ShortUrlFactory extends Factory
+{
+// Dit à Laravel : cette factory crée des enregistrements pour le modèle ShortUrl.
+    protected $model = ShortUrl::class;
+
+    public function definition(): array
+    {
+        return [
+            // Ça crée juste une promesse d'utilisateur.
+            'user_id' => User::factory(),
+            // Génère un code comme 123456 (chiffres, 6 caractères).
+            'code' => str_pad(random_int(100000, 999999), 6, '0', STR_PAD_LEFT),
+            // Génère une URL fausse
+            'original_url' => $this->faker->url(),
+        ];
+    }
+}
+```
+
+### 4.4 Lancement des tests
+
+Pour vérifier les tests, je réalise 2 méthodes :
+- Lancement des tests créés ci-dessus, en utilisant la commande :
+```bash
+php artisan test 
+```
+- Lancement de l'application, pour des tests manuels de fonctionnement, en utilisant la commade :
+```bash
+php artisan serve
+```
+
+
+A ce stade, nous avons un projet répondant au cahier des charges primaire :
+- Zone d'administration avec création d'un compte ou connection ;
+- Un tableau affichant les liens courts et pagination ;
+- Possibilité de copier le lien court (BONUS) ;
+- Gestion des liens, ajout, suppression et édition ;
+- Redirection de l'URL avec endpoint fonctionnel ;
+- Les liens supprimés n'affiche pas une 404 (BONUS) ;
+- Tests unitaires et fonctionnels.
