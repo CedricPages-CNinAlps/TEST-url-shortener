@@ -266,3 +266,9 @@ A ce stade, nous avons un projet répondant au cahier des charges primaire :
 - Possibilité de copier le lien court ;
 - Gestion des liens, ajout, suppression et édition ;
 - Redirection de l'URL avec endpoint fonctionnel.
+
+## 4. Mise en place des tests unitaires / fonctionnels
+Création de la branche Git "Tests-ShortUrl"
+```bash
+git checkout -b Tests-ShortUrl
+```
