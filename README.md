@@ -30,12 +30,13 @@ Création de la branche Git "Breeze"
 ```bash
 git checkout -b Breeze
 ```
-Installation via Composer de Breeze
+Installation via Composer de Breeze et vérification du fonctionnement
 ```bash
 composer require laravel/breeze --dev
 php artisan breeze:install blade
 npm install
 php artisan migrate
+php artisan serve
 ```
 Dans PHPStorm, j'utilise l'outil de création d'une "Pull resquest" et merge de celle-ci dans la branch "master".
 Et retour sur la branche d'origine et j'importe les développements.
@@ -48,4 +49,46 @@ git pull origin master
 Création de la branche Git "Migration-ShortUrl"
 ```bash
 git checkout -b Migration-ShortUrl
+```
+Pour la création du modèle et la migration associé, on vient créer cela via la ligne de commande suivante :
+```bash
+php artisan make:model ShortUrl -m
+```
+
+### 2.1 Migration
+Pour un bon fonctionnement, je viens compléter ma migration avec les ligne suivantes :
+```
+// Cette ligne crée une colonne user_id liée à users.id, et si tu supprimes un user, tous les enregistrements qui lui sont rattachés dans cette table seront supprimés automatiquement. 
+$table->foreignId('user_id')->constrained()->onDelete('cascade');
+// Crée une colonne code de type VARCHAR(16) avec 16 caratères max
+$table->string('code',16)->unique();
+//Crée une colonne pour l'enregistrement de l'Url
+$table->text('original_url');
+```
+
+### 2.2 Modèle
+Nous mettons ensuite en place le modèle ci-dessous :
+```
+class ShortUrl extends Model
+{
+    // Ajoute le trait permettant d’utiliser des factories pour ce modèle, utile pour les tests, les seeders.
+    use HasFactory;
+    
+    // Déclare quels champs peuvent être remplis en assignation de masse
+    protected $fillable = [
+       'user_id',
+       'code',
+       'original_url' 
+    ];
+    
+    //  Cette méthode déclare une relation Many-to-One : chaque ShortUrl appartient à un User.
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+}
+```
+
+### 2.3 Lancement de la migration
+```bash
+php artisan migrate
 ```
