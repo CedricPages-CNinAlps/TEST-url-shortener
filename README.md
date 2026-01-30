@@ -93,12 +93,176 @@ class ShortUrl extends Model
 php artisan migrate
 ```
 
-## 3. Mise en place du contrôleur
+## 3. Mise en place du contrôleur, routes et views
 Création de la branche Git "Controller-ShortUrl"
 ```bash
 git checkout -b Controller-ShortUrl
 ```
+
+### 3.1 Controller ShortUrlController
 Pour la création du contrôleur, on vient créer cela via la ligne de commande suivante :
 ```bash
 php artisan make:controller ShortUrlController
 ```
+
+Mise en place des méthodes suivantes :
+````
+# Globalisation de la variable d'appel du User Authentifié
+    // Variable accessible dans TOUTES les méthodes ce qui permets de reduire les nombre d'appel
+    protected $user;
+
+    public function __construct()
+    {
+            // Charger une seul fois
+            return $this->user = Auth::user();
+    }
+    
+# Affichige des urls créé par l'utilisateur
+     public function index()
+    {
+        $shortUrls = ShortUrl::where('user_id', $this->user->id)->orderByDesc('created_at')->paginate(10);
+        return view('shorturls.index', compact('shortUrls'));
+    }
+
+# Création d'une shorturl
+    public function create()
+    {
+        return view('shorturls.create');
+    }
+
+# Enregistrement d'une shorturl
+    public function store(Request $request)
+    {
+        $request->validate([
+           'original_url' => ['required', 'url'],
+        ]);
+        
+        do {
+          $code = $this->random();
+        } while (ShortUrl::where('code',$code)->exists());
+
+        ShortUrl::created([
+        // Lie l'information créé au USER connecté
+            'user_id' => $this->user->id,
+            'code' => $code,
+            'original_url' => $request->input('original_url'),
+        ]);
+
+        return redirect()->route('shorturls.index')->with('status','Lien raccourci créé avec succès.');
+    }
+
+# Création d'un chiffre unique pour la shorturl
+    public function random(){
+        try {
+            return str_pad(random_int(100000, 999999), 6, '0', STR_PAD_LEFT);
+        } catch (RandomException $e) {
+        }
+    }
+
+# Edition d'une shorturl
+   public function edit(ShortUrl $shortUrl, $id)
+    {
+        // Vérifie que l'URL appartient bien à l'utilisateur connecté
+        $shortUrl = ShortUrl::where('user_id', $this->user->id)->findOrFail($id);
+        return view('shorturls.edit', compact('shortUrl'));
+    }
+
+# Mise à jour d'une url d'origine
+public function update(Request $request,$id)
+    {
+        $shortUrl = ShortUrl::findOrFail($id);
+        $request->validate([
+            'original_url' => ['required', 'url'],
+        ]);
+
+        $shortUrl->update([
+            'original_url' => $request->input('original_url'),
+        ]);
+
+        return redirect()->route('shorturls.index')->with('status','Lien mis à jour.');
+    }
+
+# Suppression d'une url
+    public function destroy(ShortUrl $shortUrl, $id)
+    {
+        $shortUrl = ShortUrl::where('user_id', $this->user->id)->findOrFail($id);
+        $shortUrl->delete();
+        return redirect()->route('shorturls.index')->with('status','Lien supprimé.');
+    }
+````
+
+### 3.2 Création des routes
+Pour un bon fonctionnement du système, je viens éditer mes routes pour mes différentes méthodes :
+```
+    Route::get('/shorturls',[ShortUrlController::class, 'index'])->name('shorturls.index');
+    Route::get('/shorturls/create',[ShortUrlController::class, 'create'])->name('shorturls.create');
+    Route::post('/shorturls/store',[ShortUrlController::class, 'store'])->name('shorturls.store');
+    Route::get('/shorturls/{shorturl}/edit',[ShortUrlController::class, 'edit'])->name('shorturls.edit');
+    Route::put('/shorturls/{shorturl}',[ShortUrlController::class, 'update'])->name('shorturls.update');
+    Route::delete('/shorturls/{shorturl}',[ShortUrlController::class, 'destroy'])->name('shorturls.destroy');
+```
+
+### 3.3 Mise en place des views
+
+Pour ce faire nous faisons 3 views :
+- index.blade.php : qui affiche les informations sur nos URLs ;
+- create.blade.php : qui permettra de créé une url ; 
+- edite.blade.php : qui affiche l'url existante, que l'on pourra remplace.
+
+### 3.4 Controller de redirection
+
+#### 3.4.1 Controller
+Maintenant que nous avons une url raccourcis, nous allons faire une nouveau controller qui permettra la gestion des redirections.
+```bash
+php artisan make:controller RedirectController
+```
+
+Mise en place de la méthode suivante :
+```
+public function redirect(string $code)
+    {
+        $shortUrl = ShortUrl::withTrashed()
+            ->where('code', $code)
+            ->first();
+        
+        // Lien non trouvé
+        if (! $shortUrl) {
+            abort(404);
+        }
+        
+        // Lien supprimé => page spécifique
+        if ($shortUrl->trashed()) {
+            return response()->view('shorturls.deleted', compact('shortUrl'),410);
+        }
+        
+        return redirect()->away($shortUrl->original_url);
+    }
+```
+
+#### 3.4.2 Mise en place d'une route publique
+```
+Route::get('/r/{code}', [RedirectController::class, 'redirect'])->name('shorturls.redirect');
+```
+
+#### 3.4.3 Création d'une view lien plus valable
+Nous faisons une view deleted.blade.php complémentaire.
+
+#### 3.4.4 Mise en place d'un champ 'deleted_at' dans ma table short_urls
+Afin d'avoir un bon fonctionnement des redirections, nous ajoutons la notion de SoftDeletes.
+- Modification du model ShortUrl en ajoutant :
+```
+use Illuminate\Database\Eloquent\SoftDeletes;
+use HasFactory, SoftDeletes;
+```
+- Ensuite, création d'une nouvelle migration, pour l'intégration du champ 'deleted_at' :
+```
+php artisan make:migration add_deleted_at_to_short_urls_table --table=short_url
+php artisan migrate
+```
+
+A ce stade, nous avons un projet répondant au cahier des charges primaire :
+- Zone d'administration avec création d'un compte ou connection ;
+- Un tableau affichant les liens courts et pagination ;
+- Possibilité de copier le lien court ;
+- Gestion des liens, ajout, suppression et édition ;
+- Redirection de l'URL avec endpoint fonctionnel.
