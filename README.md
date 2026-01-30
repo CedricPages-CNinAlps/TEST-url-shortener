@@ -19,3 +19,21 @@ cd url-shortener
 ```bash
 touch database/database.sqlite
 ```
+Dans le .env, ajout du chemin d'accès à la BD
+```env
+# .env
+DB_DATABASE=/database/database.sqlite
+```
+
+### 1.3 Mise en place de l'Authentification simple
+Création de la branche Git "Breeze"
+```bash
+git checkout -b Breeze
+```
+Installation via Composer de Breeze
+```bash
+composer require laravel/breeze --dev
+php artisan breeze:install blade
+npm install
+php artisan migrate
+```
