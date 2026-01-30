@@ -82,7 +82,7 @@ class ShortUrlController extends Controller
 
     public function destroy(ShortUrl $shortUrl)
     {
-        $this->authorizeForUser($this->user->id, 'update', $shortUrl);
+        $this->authorizeForUser($this->user->id, 'delete', $shortUrl);
         $shortUrl->delete();
         return redirect()->route('shorturls.index')->with('status','Lien supprimé.');
     }
