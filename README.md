@@ -92,3 +92,13 @@ class ShortUrl extends Model
 ```bash
 php artisan migrate
 ```
+
+## 3. Mise en place du contrôleur
+Création de la branche Git "Controller-ShortUrl"
+```bash
+git checkout -b Controller-ShortUrl
+```
+Pour la création du contrôleur, on vient créer cela via la ligne de commande suivante :
+```bash
+php artisan make:controller ShortUrlController
+```
