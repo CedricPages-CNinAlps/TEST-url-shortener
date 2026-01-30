@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Models\ShortUrl;
+use App\Http\Controllers\ShortUrlController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,12 +17,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/shorturls',[ShortUrl::class, 'index'])->name('shorturls.index');
-    Route::get('/shorturls/create',[ShortUrl::class, 'create'])->name('shorturls.create');
-    Route::post('/shorturls/store',[ShortUrl::class, 'store'])->name('shorturls.store');
-    Route::get('/shorturls/{shorturl}/edit',[ShortUrl::class, 'edit'])->name('shorturls.edit');
-    Route::put('/shorturls/{shorturl}',[ShortUrl::class, 'update'])->name('shorturls.update');
-    Route::delete('/shorturls/{shorturl}',[ShortUrl::class, 'destroy'])->name('shorturls.destroy');
+    Route::get('/shorturls',[ShortUrlController::class, 'index'])->name('shorturls.index');
+    Route::get('/shorturls/create',[ShortUrlController::class, 'create'])->name('shorturls.create');
+    Route::post('/shorturls/store',[ShortUrlController::class, 'store'])->name('shorturls.store');
+    Route::get('/shorturls/{shorturl}/edit',[ShortUrlController::class, 'edit'])->name('shorturls.edit');
+    Route::put('/shorturls/{shorturl}',[ShortUrlController::class, 'update'])->name('shorturls.update');
+    Route::delete('/shorturls/{shorturl}',[ShortUrlController::class, 'destroy'])->name('shorturls.destroy');
 });
 
 require __DIR__.'/auth.php';
