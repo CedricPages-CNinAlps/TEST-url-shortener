@@ -2,7 +2,7 @@
 Création d'un raccourcisseur d'URL en Laravel 12 et PHP >= 8.2
 
 Vous trouverez ci-dessous la procédure de création du projet.
-Pour les besoins du projet, nous publirons exceptionnellement le .env, ce qui ne doitpas être fait en temps normal !
+Pour les besoins du projet, nous publirons exceptionnellement le .env, ce qui ne doit pas être fait en temps normal !
 Repo Git : https://github.com/CedricPages-CNinAlps/TEST-url-shortener.git
 
 Initialisation du projet dans la branche master
@@ -38,7 +38,7 @@ npm install
 php artisan migrate
 php artisan serve
 ```
-Dans PHPStorm, j'utilise l'outil de création d'une "Pull resquest" et merge de celle-ci dans la branch "master".
+Dans PHPStorm, j'utilise l'outil de création d'une "Pull request" et merge de celle-ci dans la branch "master".
 Et retour sur la branche d'origine et j'importe les développements.
 ```bash
 git checkout master
@@ -56,7 +56,7 @@ php artisan make:model ShortUrl -m
 ```
 
 ### 2.1 Migration
-Pour un bon fonctionnement, je viens compléter ma migration avec les ligne suivantes :
+Pour un bon fonctionnement, je viens compléter ma migration avec les lignes suivantes :
 ```
 // Cette ligne crée une colonne user_id liée à users.id, et si tu supprimes un user, tous les enregistrements qui lui sont rattachés dans cette table seront supprimés automatiquement. 
 $table->foreignId('user_id')->constrained()->onDelete('cascade');
@@ -204,15 +204,15 @@ Pour un bon fonctionnement du système, je viens éditer mes routes pour mes dif
 
 ### 3.3 Mise en place des views
 
-Pour ce faire nous faisons 3 views :
+Pour ce faire, nous faisons 3 views :
 - index.blade.php : qui affiche les informations sur nos URLs ;
-- create.blade.php : qui permettra de créé une url ; 
+- create.blade.php : qui permettra de créer une url ; 
 - edite.blade.php : qui affiche l'url existante, que l'on pourra remplace.
 
 ### 3.4 Controller de redirection
 
 #### 3.4.1 Controller
-Maintenant que nous avons une url raccourcis, nous allons faire une nouveau controller qui permettra la gestion des redirections.
+Maintenant que nous avons une url raccourcis, nous allons faire un nouveau controller, qui permettra la gestion des redirections.
 ```bash
 php artisan make:controller RedirectController
 ```
@@ -266,7 +266,7 @@ A ce stade, nous avons un projet répondant au cahier des charges primaire :
 - Possibilité de copier le lien court (BONUS) ;
 - Gestion des liens, ajout, suppression et édition ;
 - Redirection de l'URL avec endpoint fonctionnel ;
-- Les liens supprimés n'affiche pas une 404 (BONUS).
+- Les liens supprimés n'affichent pas une 404 (BONUS).
 
 ## 4. Mise en place des tests unitaires / fonctionnels
 Création de la branche Git "Tests-ShortUrl"
@@ -426,11 +426,10 @@ Pour vérifier les tests, je réalise 2 méthodes :
 ```bash
 php artisan test 
 ```
-- Lancement de l'application, pour des tests manuels de fonctionnement, en utilisant la commade :
+- Lancement de l'application, pour des tests manuels de fonctionnement, en utilisant la commande :
 ```bash
 php artisan serve
 ```
-
 
 A ce stade, nous avons un projet répondant au cahier des charges primaire :
 - Zone d'administration avec création d'un compte ou connection ;
@@ -438,7 +437,7 @@ A ce stade, nous avons un projet répondant au cahier des charges primaire :
 - Possibilité de copier le lien court (BONUS) ;
 - Gestion des liens, ajout, suppression et édition ;
 - Redirection de l'URL avec endpoint fonctionnel ;
-- Les liens supprimés n'affiche pas une 404 (BONUS) ;
+- Les liens supprimés n'affichent pas une 404 (BONUS) ;
 - Tests unitaires et fonctionnels.
 
 ## 5. Réalisation des bonus
@@ -446,3 +445,174 @@ Création de la branche Git "Bonus-ShortUrl"
 ```bash
 git checkout -b Bonus-ShortUrl
 ```
+
+### 5.1. Compteur
+Pour réaliser cela, nous allons venir créer une nouvelle migration.
+```bash
+php artisan make:migration add_clicks_to_short_urls_table --table=short_urls
+```
+Une fois la migration construite comme ci-dessous, nous réaliserons une migration.
+```
+    public function up(): void
+    {
+        Schema::table('short_urls', function (Blueprint $table) {
+            $table->unsignedBigInteger('clicks')->default(0);
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('short_urls', function (Blueprint $table) {
+            $table->dropColumn('clicks');
+        });
+    }
+```
+ Maintenant, je vais pouvoir modifier mon controller "ShortUrlController" en ajoutant la méthode ci-dessous :
+```
+    public function incrementClicks(ShortUrl $shortUrl)
+    {
+        $shortUrl->increment('clicks');
+        $shortUrl->refresh(); // Recharge le modèle avec la nouvelle valeur
+
+        return response()->json([
+            'success' => true,
+            'clicks' => $shortUrl->clicks  // ← Nouveau compteur
+        ]);
+    }
+```
+Elle fonctionne en 3 étapes simples pour garantir que le JavaScript qui sera préparer dans la view index reçoive toujours le compteur à jour.
+- Insère le compteur de 1 directement en base de données.
+- Recharge le modèle depuis la base de données.
+- Retourne le nouveau compteur au format JSON.
+
+Du coup maintenant, je vais modifier ma view index pour ajouter le script suivant :
+```
+// Incrémenter pour le lien
+                document.addEventListener('DOMContentLoaded', function() {
+                    document.querySelectorAll('.short-url-link').forEach(link => {
+                        link.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            const url = this.dataset.url;
+                            const id = this.dataset.id;
+                            incrementClicks(id).then(() => {
+                                window.open(url, '_blank');
+                            });
+                        });
+                    });
+
+// Incrémenter pour copier
+                    document.querySelectorAll('.btn-copy').forEach(btn => {
+                        btn.addEventListener('click', async function() {
+                            const url = this.dataset.url;
+                            const id = this.dataset.id;
+                            try {
+                                await incrementClicks(id);
+                                navigator.clipboard.writeText(url);
+                                this.innerHTML = '<i class="fas fa-check"></i> Copié !';
+                                setTimeout(() => this.innerHTML = '<i class="fas fa-copy"></i> Copier', 2000);
+                            } catch (error) {
+                                console.error('Erreur:', error);
+                            }
+                        });
+                    });
+
+// Rend la fonction ACCESSIBLE PARTOUT dans la page
+                    window.incrementClicks = async function(id) {  
+                        const response = await fetch(`/shorturls/${id}/increment-clicks`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            }
+                        });
+                        const data = await response.json();
+
+// Mise à jour instantannée du compteur avec un petit effet visuel
+                        if (data.success && data.clicks !== undefined) {
+                            const counterElement = document.querySelector(`.clicks-count[data-id="${id}"]`);
+                            if (counterElement) {
+                                counterElement.textContent = data.clicks;
+                                counterElement.style.color = '#10b981';
+                                setTimeout(() => counterElement.style.color = '', 500);
+                            }
+                        }
+                        
+                        return data;
+                    };
+                });
+```
+
+Maintenant pour un bon fonctionnement, on va modifier l'HTML pour intégrer les data-id et data-url.
+```
+<a href="#" class="me-2 short-url-link" data-url="{{ $shortUrlFull }}" data-id="{{ $shortUrl->id }}">{{ $shortUrlFull }}</a>
+<button type="button" class="btn btn-sm btn-outline-secondary btn-copy" data-url="{{ $shortUrlFull }}" data-id="{{ $shortUrl->id }}">
+    <i class="fas fa-copy"></i> Copier
+</button>
+```
+Et on fait pareil pour le champ du compteur :
+```
+<span class="clicks-count" data-id="{{ $shortUrl->id }}">{{ $shortUrl->clicks }}</span>
+```
+Maintenant, nous avons un compteur fonctionnel qui s'incrémente quand on copie le lien court ou alors quand on clique sur celui-ci.
+
+### 5.2. Cron de suppression automatique
+Pour réaliser cela, nous allons venir créer une nouvelle migration.
+```bash
+php artisan make:migration add_last_used_at_to_short_urls_table --table=short_urls
+```
+Dans cette migration, on vient ajouter un champ date "last_used_at". Dans lequel, on ajoutera la date de dernière utilisation au clic sur l'url courte ou le bouton copier.
+
+En conséquence, je vais venir modifier la méthode du compteur dans mon controller afin d'ajouter la date du jour :
+```
+// Ajoute la date et l'heure au moment du clique
+$shortUrl->last_used_at = now();
+// Force l'enregistrement avant le refresh
+$shortUrl->save();
+```
+
+Maintenant, nous pouvons créer une nouvelle commande pour supprimer les urls qui n'ont pas été utilisées depuis plus de 30 jours.
+```bash
+php artisan make:command CleanOldShortUrls
+```
+Cela, nous permet de créer le fichier app/Console/Commands/CleanOldShortUrls.php
+Dans celui-ci, nous allons pouvoir configurer la commande suivante :
+```
+public function handle()
+    {
+        $deleted = ShortUrl::where(function ($query) {
+            $query->Where('last_used_at', '<', now()->subMonths(3));
+        })->delete();
+
+        $this->info("{$deleted} short URLs supprimées (non utilisées depuis +3 mois)");
+
+        return 0;
+    }
+```
+Pour finir dans routes/console.php, nous allons configurer la commande qui exécutera automatiquement la suppression.
+```
+Schedule::command('shorturls:clean')->daily()->withoutOverlapping();
+```
+
+Nous pouvons tester le fonctionnement final via les commandes suivantes :
+```bash
+# Test si la commande fonctionne déjà
+php artisan shorturls:clean
+
+# Test si planning est configuré
+php artisan schedule:list
+# → shorturls:clean → daily @ 00:00
+
+# Test du scheduler
+php artisan schedule:run
+```
+
+A ce stade, nous avons un projet répondant au cahier des charges primaire :
+- Zone d'administration avec création d'un compte ou connection ;
+- Un tableau affichant les liens courts et pagination ;
+- Possibilité de copier le lien court (BONUS) ;
+- Gestion des liens, ajout, suppression et édition ;
+- Redirection de l'URL avec endpoint fonctionnel ;
+- Les liens supprimés n'affichent pas une 404 (BONUS) ;
+- Tests unitaires et fonctionnels ;
+- Compteur de clic lien court et copie (BONUS) ;
+- Cron de suppression automatique des liens pas cliquer/copier depuis +3 mois. 
