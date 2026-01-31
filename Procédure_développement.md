@@ -2,7 +2,7 @@
 Création d'un raccourcisseur d'URL en Laravel 12 et PHP >= 8.2
 
 Vous trouverez ci-dessous la procédure de création du projet.
-Pour les besoins du projet, nous publirons exceptionnellement le .env, ce qui ne doit pas être fait en temps normal !
+Pour les besoins du projet, nous publierons exceptionnellement le .env, ce qui ne doit pas être fait en temps normal !
 Repo Git : https://github.com/CedricPages-CNinAlps/TEST-url-shortener.git
 
 Initialisation du projet dans la branche master

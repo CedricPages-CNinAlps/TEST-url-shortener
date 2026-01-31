@@ -99,7 +99,8 @@ IMAGE_PATH             =
 INPUT_FILTER           =
 FILTER_PATTERNS        =
 FILTER_SOURCE_PATTERNS =
-USE_MDFILE_AS_MAINPAGE = ../README.md
+USE_MDFILE_AS_MAINPAGE = ../Readme.md \
+                         ../Procédure_développement.md
 
 # Source browsing configuration
 SOURCE_BROWSER         = YES
