@@ -4,8 +4,9 @@ Ce projet est un raccourcisseur d'URL en Laravel 12 et PHP >= 8.2.
 Il permet de créer des liens courts, de les visualiser dans une page d'accueil, de les supprimer, de les modifier, et de les rediriger vers l'URL originale.
 
 Il utilise la base de données SQLite, l'Authentification simple via Laravel Breeze, et des tests unitaires et fonctionnels.
+Vous pouvez retrouver mon processus de développement ici : [Procédure_développement.md](Procédure_développement.md)
 
-Pour initialiser et installer le projet, executez les commandes suivantes :
+Pour initialiser et installer le projet, exécutez les commandes suivantes :
 
 1. Initialisation du projet
 ```bash
@@ -62,3 +63,15 @@ php artisan serve
 
 # L'application sera disponible à l'adresse : http://127.0.0.1:8000
 ```
+6. Génération de la documentation
+Attention pour la génération, il faut [Doxygen](https://www.doxygen.nl/download.html) et [Graphviz](https://graphviz.org/download/)
+```bash
+# Aller dans le dossier "Documentation"
+cd Documentation
+
+# Lancer la création de la documentation
+Doxygen Doxyfile
+```
+La documentation sera accessible dans le [lien : ./Documentation/docs/html/index.html](./Documentation/docs/html/index.html)
+En fonction de votre IDE, un clis droit et ouvrir dans le navigateur.
+
