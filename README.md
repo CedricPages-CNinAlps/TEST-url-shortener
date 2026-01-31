@@ -2,7 +2,7 @@
 Création d'un raccourcisseur d'URL en Laravel 12 et PHP >= 8.2
 
 Vous trouverez ci-dessous la procédure de création du projet.
-Pour les besoins du projet, nous publirons exceptionnellement le .env, ce qui ne doitpas être fait en temps normal !
+Pour les besoins du projet, nous publirons exceptionnellement le .env, ce qui ne doit pas être fait en temps normal !
 Repo Git : https://github.com/CedricPages-CNinAlps/TEST-url-shortener.git
 
 Initialisation du projet dans la branche master
@@ -38,7 +38,7 @@ npm install
 php artisan migrate
 php artisan serve
 ```
-Dans PHPStorm, j'utilise l'outil de création d'une "Pull resquest" et merge de celle-ci dans la branch "master".
+Dans PHPStorm, j'utilise l'outil de création d'une "Pull request" et merge de celle-ci dans la branch "master".
 Et retour sur la branche d'origine et j'importe les développements.
 ```bash
 git checkout master
@@ -56,7 +56,7 @@ php artisan make:model ShortUrl -m
 ```
 
 ### 2.1 Migration
-Pour un bon fonctionnement, je viens compléter ma migration avec les ligne suivantes :
+Pour un bon fonctionnement, je viens compléter ma migration avec les lignes suivantes :
 ```
 // Cette ligne crée une colonne user_id liée à users.id, et si tu supprimes un user, tous les enregistrements qui lui sont rattachés dans cette table seront supprimés automatiquement. 
 $table->foreignId('user_id')->constrained()->onDelete('cascade');
@@ -204,15 +204,15 @@ Pour un bon fonctionnement du système, je viens éditer mes routes pour mes dif
 
 ### 3.3 Mise en place des views
 
-Pour ce faire nous faisons 3 views :
+Pour ce faire, nous faisons 3 views :
 - index.blade.php : qui affiche les informations sur nos URLs ;
-- create.blade.php : qui permettra de créé une url ; 
+- create.blade.php : qui permettra de créer une url ; 
 - edite.blade.php : qui affiche l'url existante, que l'on pourra remplace.
 
 ### 3.4 Controller de redirection
 
 #### 3.4.1 Controller
-Maintenant que nous avons une url raccourcis, nous allons faire une nouveau controller qui permettra la gestion des redirections.
+Maintenant que nous avons une url raccourcis, nous allons faire un nouveau controller, qui permettra la gestion des redirections.
 ```bash
 php artisan make:controller RedirectController
 ```
@@ -266,7 +266,7 @@ A ce stade, nous avons un projet répondant au cahier des charges primaire :
 - Possibilité de copier le lien court (BONUS) ;
 - Gestion des liens, ajout, suppression et édition ;
 - Redirection de l'URL avec endpoint fonctionnel ;
-- Les liens supprimés n'affiche pas une 404 (BONUS).
+- Les liens supprimés n'affichent pas une 404 (BONUS).
 
 ## 4. Mise en place des tests unitaires / fonctionnels
 Création de la branche Git "Tests-ShortUrl"
@@ -426,7 +426,7 @@ Pour vérifier les tests, je réalise 2 méthodes :
 ```bash
 php artisan test 
 ```
-- Lancement de l'application, pour des tests manuels de fonctionnement, en utilisant la commade :
+- Lancement de l'application, pour des tests manuels de fonctionnement, en utilisant la commande :
 ```bash
 php artisan serve
 ```
@@ -437,7 +437,7 @@ A ce stade, nous avons un projet répondant au cahier des charges primaire :
 - Possibilité de copier le lien court (BONUS) ;
 - Gestion des liens, ajout, suppression et édition ;
 - Redirection de l'URL avec endpoint fonctionnel ;
-- Les liens supprimés n'affiche pas une 404 (BONUS) ;
+- Les liens supprimés n'affichent pas une 404 (BONUS) ;
 - Tests unitaires et fonctionnels.
 
 ## 5. Réalisation des bonus
@@ -467,7 +467,7 @@ Une fois la migration construite comme ci-dessous, nous réaliserons une migrati
         });
     }
 ```
- Maintenant, je vais pouvoir modifier mon controller "ShortUrlController" en ajoutant la méhode ci-dessous :
+ Maintenant, je vais pouvoir modifier mon controller "ShortUrlController" en ajoutant la méthode ci-dessous :
 ```
     public function incrementClicks(ShortUrl $shortUrl)
     {
@@ -481,7 +481,7 @@ Une fois la migration construite comme ci-dessous, nous réaliserons une migrati
     }
 ```
 Elle fonctionne en 3 étapes simples pour garantir que le JavaScript qui sera préparer dans la view index reçoive toujours le compteur à jour.
-- Incère le compteur de 1 directement en base de données.
+- Insère le compteur de 1 directement en base de données.
 - Recharge le modèle depuis la base de données.
 - Retourne le nouveau compteur au format JSON.
 
@@ -542,7 +542,7 @@ Du coup maintenant, je vais modifier ma view index pour ajouter le script suivan
                 });
 ```
 
-Maintenant pour un bon fonctionnement,on va modifier l'HTML pour integrer les data-id et data-url.
+Maintenant pour un bon fonctionnement, on va modifier l'HTML pour intégrer les data-id et data-url.
 ```
 <a href="#" class="me-2 short-url-link" data-url="{{ $shortUrlFull }}" data-id="{{ $shortUrl->id }}">{{ $shortUrlFull }}</a>
 <button type="button" class="btn btn-sm btn-outline-secondary btn-copy" data-url="{{ $shortUrlFull }}" data-id="{{ $shortUrl->id }}">
@@ -553,14 +553,14 @@ Et on fait pareil pour le champ du compteur :
 ```
 <span class="clicks-count" data-id="{{ $shortUrl->id }}">{{ $shortUrl->clicks }}</span>
 ```
-Maintenant, nous avons un compteur fonctionnel qui s'incrémente quand on copîe le lien court ou alors quand on clique sur celui-ci.
+Maintenant, nous avons un compteur fonctionnel qui s'incrémente quand on copie le lien court ou alors quand on clique sur celui-ci.
 
 ### 5.2. Cron de suppression automatique
 Pour réaliser cela, nous allons venir créer une nouvelle migration.
 ```bash
 php artisan make:migration add_last_used_at_to_short_urls_table --table=short_urls
 ```
-Dans cette migration, on vient ajouter un champs date "last_used_at". Dans lequel, on ajoutera la date de dernière utilisation au clique sur l'url courte ou le bouton copier.
+Dans cette migration, on vient ajouter un champ date "last_used_at". Dans lequel, on ajoutera la date de dernière utilisation au clic sur l'url courte ou le bouton copier.
 
 En conséquence, je vais venir modifier la méthode du compteur dans mon controller afin d'ajouter la date du jour :
 ```
@@ -570,7 +570,7 @@ $shortUrl->last_used_at = now();
 $shortUrl->save();
 ```
 
-Mainteant, nous pouvons créer une nouvelle commande pour supprimer les urls qui n'ont pas été utilisées depuis plus de 30 jours.
+Maintenant, nous pouvons créer une nouvelle commande pour supprimer les urls qui n'ont pas été utilisées depuis plus de 30 jours.
 ```bash
 php artisan make:command CleanOldShortUrls
 ```
@@ -588,7 +588,7 @@ public function handle()
         return 0;
     }
 ```
-Pour finir dans routes/console.php, nous allons configurer la commande qui éxécutera automatiquement la suppression.
+Pour finir dans routes/console.php, nous allons configurer la commande qui exécutera automatiquement la suppression.
 ```
 Schedule::command('shorturls:clean')->daily()->withoutOverlapping();
 ```
@@ -612,7 +612,7 @@ A ce stade, nous avons un projet répondant au cahier des charges primaire :
 - Possibilité de copier le lien court (BONUS) ;
 - Gestion des liens, ajout, suppression et édition ;
 - Redirection de l'URL avec endpoint fonctionnel ;
-- Les liens supprimés n'affiche pas une 404 (BONUS) ;
+- Les liens supprimés n'affichent pas une 404 (BONUS) ;
 - Tests unitaires et fonctionnels ;
 - Compteur de clic lien court et copie (BONUS) ;
 - Cron de suppression automatique des liens pas cliquer/copier depuis +3 mois. 
