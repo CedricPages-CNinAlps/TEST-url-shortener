@@ -615,4 +615,4 @@ A ce stade, nous avons un projet répondant au cahier des charges primaire :
 - Les liens supprimés n'affiche pas une 404 (BONUS) ;
 - Tests unitaires et fonctionnels ;
 - Compteur de clic lien court et copie (BONUS) ;
-- Cron de suppression automatique des lien  pas cliquer/copier depuis +3 mois. 
+- Cron de suppression automatique des liens pas cliquer/copier depuis +3 mois. 
