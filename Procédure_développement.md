@@ -616,3 +616,112 @@ A ce stade, nous avons un projet répondant au cahier des charges primaire :
 - Tests unitaires et fonctionnels ;
 - Compteur de clic lien court et copie (BONUS) ;
 - Cron de suppression automatique des liens pas cliquer/copier depuis +3 mois. 
+
+## 6. Génération des images pour utilisation sous Docker/Podman
+
+### 6.1. Edition d'un Dockerfile
+
+```
+FROM php:8.3-fpm
+
+# Installation des dépendances système et extensions PHP pour Laravel
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    libzip-dev
+
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+
+# Installation de Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www
+COPY . /var/www
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+RUN composer install --optimize-autoloader --no-dev
+RUN chown -R www-data:www-data /var/www
+RUN chmod -R 755 /var/www/storage /var/www/bootstrap/cache
+```
+### 6.2. Edition d'un docker-compose
+```
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: laravel-app
+    container_name: laravel_app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www  # Code source
+      - ./database:/database  # Dossier pour SQLite
+    networks:
+      - laravel
+    environment:
+      - DB_CONNECTION=sqlite
+      - DB_DATABASE=/database/database.sqlite
+
+  nginx:
+    image: nginx:alpine
+    container_name: laravel_nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - laravel
+    depends_on:
+      - app
+
+networks:
+  laravel:
+    driver: bridge
+```
+### 6.3. Fichier Nginx pour servir Laravel
+```
+server {
+    listen 80;
+    index index.php index.html;
+    error_log  /var/log/nginx/error.log;
+    access_log /var/log/nginx/access.log;
+    root /var/www/public;
+
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass app:9000;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+        gzip_static on;
+    }
+}
+```
+### 6.4. Commandes de préparation de la BD sqlite
+```bash
+mkdir -p database
+touch database/database.sqlite
+chmod 666 database/database.sqlite  # Permissions pour www-data
+```
+### 6.5. Commandes de lancement du Docker
+```
+docker-compose up -d --build  # Reconstruit sans MySQL
+docker-compose exec app php artisan key:generate
+docker-compose exec app php artisan migrate
+```
+
+

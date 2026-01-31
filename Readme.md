@@ -75,3 +75,29 @@ Doxygen Doxyfile
 La documentation sera accessible dans le [lien : ./Documentation/docs/html/index.html](./Documentation/docs/html/index.html)
 En fonction de votre IDE, un clis droit et ouvrir dans le navigateur.
 
+7. Utilisation de l'image Docker
+```bash
+# Préparation du Fichier SQLite
+touch database/database.sqlite
+chmod 666 database/database.sqlite  # Permissions pour www-data
+
+# Commandes de Lancement
+docker-compose up -d --build  # Construit le setup 
+docker-compose exec app php artisan key:generate
+docker-compose exec app php artisan migrate
+```
+Accédez à http://localhost:8000 pour voir l'application.
+Par la suite, vous pouvez utiliser les commandes utilent ci-dessous :
+```bash
+# Arrête les services
+docker-compose stop
+# Relance les mêmes services à l'identique
+docker-compose start
+# Arrête + redémarre en une commande
+docker-compose restart
+# Arrête ET supprime les conteneurs + réseaux
+docker-compose down
+# Supprime aussi les volumes (SQLite sera effacé !).
+docker-compose down -v
+```
+
