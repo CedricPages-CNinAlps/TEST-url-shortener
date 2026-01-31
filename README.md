@@ -431,7 +431,6 @@ php artisan test
 php artisan serve
 ```
 
-
 A ce stade, nous avons un projet répondant au cahier des charges primaire :
 - Zone d'administration avec création d'un compte ou connection ;
 - Un tableau affichant les liens courts et pagination ;
@@ -555,3 +554,65 @@ Et on fait pareil pour le champ du compteur :
 <span class="clicks-count" data-id="{{ $shortUrl->id }}">{{ $shortUrl->clicks }}</span>
 ```
 Maintenant, nous avons un compteur fonctionnel qui s'incrémente quand on copîe le lien court ou alors quand on clique sur celui-ci.
+
+### 5.2. Cron de suppression automatique
+Pour réaliser cela, nous allons venir créer une nouvelle migration.
+```bash
+php artisan make:migration add_last_used_at_to_short_urls_table --table=short_urls
+```
+Dans cette migration, on vient ajouter un champs date "last_used_at". Dans lequel, on ajoutera la date de dernière utilisation au clique sur l'url courte ou le bouton copier.
+
+En conséquence, je vais venir modifier la méthode du compteur dans mon controller afin d'ajouter la date du jour :
+```
+// Ajoute la date et l'heure au moment du clique
+$shortUrl->last_used_at = now();
+// Force l'enregistrement avant le refresh
+$shortUrl->save();
+```
+
+Mainteant, nous pouvons créer une nouvelle commande pour supprimer les urls qui n'ont pas été utilisées depuis plus de 30 jours.
+```bash
+php artisan make:command CleanOldShortUrls
+```
+Cela, nous permet de créer le fichier app/Console/Commands/CleanOldShortUrls.php
+Dans celui-ci, nous allons pouvoir configurer la commande suivante :
+```
+public function handle()
+    {
+        $deleted = ShortUrl::where(function ($query) {
+            $query->Where('last_used_at', '<', now()->subMonths(3));
+        })->delete();
+
+        $this->info("{$deleted} short URLs supprimées (non utilisées depuis +3 mois)");
+
+        return 0;
+    }
+```
+Pour finir dans routes/console.php, nous allons configurer la commande qui éxécutera automatiquement la suppression.
+```
+Schedule::command('shorturls:clean')->daily()->withoutOverlapping();
+```
+
+Nous pouvons tester le fonctionnement final via les commandes suivantes :
+```bash
+# Test si la commande fonctionne déjà
+php artisan shorturls:clean
+
+# Test si planning est configuré
+php artisan schedule:list
+# → shorturls:clean → daily @ 00:00
+
+# Test du scheduler
+php artisan schedule:run
+```
+
+A ce stade, nous avons un projet répondant au cahier des charges primaire :
+- Zone d'administration avec création d'un compte ou connection ;
+- Un tableau affichant les liens courts et pagination ;
+- Possibilité de copier le lien court (BONUS) ;
+- Gestion des liens, ajout, suppression et édition ;
+- Redirection de l'URL avec endpoint fonctionnel ;
+- Les liens supprimés n'affiche pas une 404 (BONUS) ;
+- Tests unitaires et fonctionnels ;
+- Compteur de clic lien court et copie (BONUS) ;
+- Cron de suppression automatique des lien  pas cliquer/copier depuis +3 mois. 

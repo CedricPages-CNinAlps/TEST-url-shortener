@@ -84,7 +84,9 @@ class ShortUrlController extends Controller
     public function incrementClicks(ShortUrl $shortUrl)
     {
         $shortUrl->increment('clicks');
-        $shortUrl->refresh(); // Recharge le modèle avec la nouvelle valeur
+        $shortUrl->last_used_at = now();
+        $shortUrl->save();
+        $shortUrl->refresh();
 
         return response()->json([
             'success' => true,
