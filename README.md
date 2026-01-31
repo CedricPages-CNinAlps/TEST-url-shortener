@@ -440,3 +440,9 @@ A ce stade, nous avons un projet répondant au cahier des charges primaire :
 - Redirection de l'URL avec endpoint fonctionnel ;
 - Les liens supprimés n'affiche pas une 404 (BONUS) ;
 - Tests unitaires et fonctionnels.
+
+## 5. Réalisation des bonus
+Création de la branche Git "Bonus-ShortUrl"
+```bash
+git checkout -b Bonus-ShortUrl
+```
