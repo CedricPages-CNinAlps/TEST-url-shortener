@@ -25,6 +25,9 @@
                         URL courte
                     </th>
                     <th class="px-4 py-2 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                        Nb Cliques
+                    </th>
+                    <th class="px-4 py-2 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Action
                     </th>
                 </tr>
@@ -41,11 +44,14 @@
                         </td>
                         <td class="whitespace-nowrap px-4 py-2 text-center text-sm font-medium text-gray-900 dark:text-gray-100 space-x-3">
                             <div class="d-flex align-items-center">
-                                <a href="{{ $shortUrlFull }}" target="_blank" class="me-2">{{ $shortUrlFull }}</a>
-                                <button type="button" class="btn btn-sm btn-outline-secondary btn-copy" data-url="{{ $shortUrlFull }}">
+                                <a href="#" class="me-2 short-url-link" data-url="{{ $shortUrlFull }}" data-id="{{ $shortUrl->id }}">{{ $shortUrlFull }}</a>
+                                <button type="button" class="btn btn-sm btn-outline-secondary btn-copy" data-url="{{ $shortUrlFull }}" data-id="{{ $shortUrl->id }}">
                                     <i class="fas fa-copy"></i> Copier
                                 </button>
                             </div>
+                        </td>
+                        <td class="whitespace-nowrap px-4 py-2 text-center text-sm font-medium text-gray-900 dark:text-gray-100">
+                            <span class="clicks-count" data-id="{{ $shortUrl->id }}">{{ $shortUrl->clicks }}</span>
                         </td>
                         <td class="whitespace-nowrap px-4 py-2 text-center text-sm font-medium text-gray-900 dark:text-gray-100 space-x-3">
                             <a href="{{ route('shorturls.edit', $shortUrl) }}">
@@ -100,6 +106,62 @@
                         });
                     });
                 });
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Incrémenter pour le lien
+                    document.querySelectorAll('.short-url-link').forEach(link => {
+                        link.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            const url = this.dataset.url;
+                            const id = this.dataset.id;
+                            incrementClicks(id).then(() => {
+                                window.open(url, '_blank');
+                            });
+                        });
+                    });
+
+                    // Incrémenter pour copier
+                    document.querySelectorAll('.btn-copy').forEach(btn => {
+                        btn.addEventListener('click', async function() {
+                            const url = this.dataset.url;
+                            const id = this.dataset.id;
+                            try {
+                                await incrementClicks(id);
+                                navigator.clipboard.writeText(url);
+                                this.innerHTML = '<i class="fas fa-check"></i> Copié !';
+                                setTimeout(() => this.innerHTML = '<i class="fas fa-copy"></i> Copier', 2000);
+                            } catch (error) {
+                                console.error('Erreur:', error);
+                            }
+                        });
+                    });
+
+                    window.incrementClicks = async function(id) {  // Rendre globale pour réutilisation
+                        const response = await fetch(`/shorturls/${id}/increment-clicks`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            }
+                        });
+
+                        const data = await response.json();
+
+                        // ✅ MISE À JOUR INSTANTANÉE DU COMPTEUR
+                        if (data.success && data.clicks !== undefined) {
+                            const counterElement = document.querySelector(`.clicks-count[data-id="${id}"]`);
+                            if (counterElement) {
+                                counterElement.textContent = data.clicks;
+                                // Effet visuel optionnel
+                                counterElement.style.color = '#10b981';
+                                setTimeout(() => counterElement.style.color = '', 500);
+                            }
+                        }
+
+                        return data;
+                    };
+                });
+
             </script>
             @endpush
         </div>

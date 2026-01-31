@@ -446,3 +446,112 @@ Création de la branche Git "Bonus-ShortUrl"
 ```bash
 git checkout -b Bonus-ShortUrl
 ```
+
+### 5.1. Compteur
+Pour réaliser cela, nous allons venir créer une nouvelle migration.
+```bash
+php artisan make:migration add_clicks_to_short_urls_table --table=short_urls
+```
+Une fois la migration construite comme ci-dessous, nous réaliserons une migration.
+```
+    public function up(): void
+    {
+        Schema::table('short_urls', function (Blueprint $table) {
+            $table->unsignedBigInteger('clicks')->default(0);
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('short_urls', function (Blueprint $table) {
+            $table->dropColumn('clicks');
+        });
+    }
+```
+ Maintenant, je vais pouvoir modifier mon controller "ShortUrlController" en ajoutant la méhode ci-dessous :
+```
+    public function incrementClicks(ShortUrl $shortUrl)
+    {
+        $shortUrl->increment('clicks');
+        $shortUrl->refresh(); // Recharge le modèle avec la nouvelle valeur
+
+        return response()->json([
+            'success' => true,
+            'clicks' => $shortUrl->clicks  // ← Nouveau compteur
+        ]);
+    }
+```
+Elle fonctionne en 3 étapes simples pour garantir que le JavaScript qui sera préparer dans la view index reçoive toujours le compteur à jour.
+- Incère le compteur de 1 directement en base de données.
+- Recharge le modèle depuis la base de données.
+- Retourne le nouveau compteur au format JSON.
+
+Du coup maintenant, je vais modifier ma view index pour ajouter le script suivant :
+```
+// Incrémenter pour le lien
+                document.addEventListener('DOMContentLoaded', function() {
+                    document.querySelectorAll('.short-url-link').forEach(link => {
+                        link.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            const url = this.dataset.url;
+                            const id = this.dataset.id;
+                            incrementClicks(id).then(() => {
+                                window.open(url, '_blank');
+                            });
+                        });
+                    });
+
+// Incrémenter pour copier
+                    document.querySelectorAll('.btn-copy').forEach(btn => {
+                        btn.addEventListener('click', async function() {
+                            const url = this.dataset.url;
+                            const id = this.dataset.id;
+                            try {
+                                await incrementClicks(id);
+                                navigator.clipboard.writeText(url);
+                                this.innerHTML = '<i class="fas fa-check"></i> Copié !';
+                                setTimeout(() => this.innerHTML = '<i class="fas fa-copy"></i> Copier', 2000);
+                            } catch (error) {
+                                console.error('Erreur:', error);
+                            }
+                        });
+                    });
+
+// Rend la fonction ACCESSIBLE PARTOUT dans la page
+                    window.incrementClicks = async function(id) {  
+                        const response = await fetch(`/shorturls/${id}/increment-clicks`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            }
+                        });
+                        const data = await response.json();
+
+// Mise à jour instantannée du compteur avec un petit effet visuel
+                        if (data.success && data.clicks !== undefined) {
+                            const counterElement = document.querySelector(`.clicks-count[data-id="${id}"]`);
+                            if (counterElement) {
+                                counterElement.textContent = data.clicks;
+                                counterElement.style.color = '#10b981';
+                                setTimeout(() => counterElement.style.color = '', 500);
+                            }
+                        }
+                        
+                        return data;
+                    };
+                });
+```
+
+Maintenant pour un bon fonctionnement,on va modifier l'HTML pour integrer les data-id et data-url.
+```
+<a href="#" class="me-2 short-url-link" data-url="{{ $shortUrlFull }}" data-id="{{ $shortUrl->id }}">{{ $shortUrlFull }}</a>
+<button type="button" class="btn btn-sm btn-outline-secondary btn-copy" data-url="{{ $shortUrlFull }}" data-id="{{ $shortUrl->id }}">
+    <i class="fas fa-copy"></i> Copier
+</button>
+```
+Et on fait pareil pour le champ du compteur :
+```
+<span class="clicks-count" data-id="{{ $shortUrl->id }}">{{ $shortUrl->clicks }}</span>
+```
+Maintenant, nous avons un compteur fonctionnel qui s'incrémente quand on copîe le lien court ou alors quand on clique sur celui-ci.

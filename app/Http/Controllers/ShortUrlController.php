@@ -80,4 +80,16 @@ class ShortUrlController extends Controller
         $shortUrl->delete();
         return redirect()->route('shorturls.index')->with('status','Lien supprimé.');
     }
+
+    public function incrementClicks(ShortUrl $shortUrl)
+    {
+        $shortUrl->increment('clicks');
+        $shortUrl->refresh(); // Recharge le modèle avec la nouvelle valeur
+
+        return response()->json([
+            'success' => true,
+            'clicks' => $shortUrl->clicks  // ← Nouveau compteur
+        ]);
+    }
+
 }

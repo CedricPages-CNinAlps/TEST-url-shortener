@@ -24,6 +24,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/shorturls/{shorturl}/edit',[ShortUrlController::class, 'edit'])->name('shorturls.edit');
     Route::put('/shorturls/{shorturl}',[ShortUrlController::class, 'update'])->name('shorturls.update');
     Route::delete('/shorturls/{shorturl}',[ShortUrlController::class, 'destroy'])->name('shorturls.destroy');
+
+    Route::post('/shorturls/{shortUrl}/increment-clicks', [ShortUrlController::class, 'incrementClicks'])->name('shorturls.increment-clicks');
 });
 
 Route::get('/r/{code}', [RedirectController::class, 'redirect'])->name('shorturls.redirect');
