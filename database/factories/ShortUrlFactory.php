@@ -12,7 +12,13 @@ use Illuminate\Support\Str;
  */
 class ShortUrlFactory extends Factory
 {
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
     protected $model = ShortUrl::class;
+
     /**
      * Define the model's default state.
      *

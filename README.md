@@ -108,23 +108,23 @@ php artisan make:controller ShortUrlController
 Mise en place des méthodes suivantes :
 ````
 # Globalisation de la variable d'appel du User Authentifié
-    // Variable accessible dans TOUTES les méthodes ce qui permets de reduire les nombre d'appel
+    // Variable accessible dans TOUTES les méthodes ce qui permet de réduire les nombre d'appels
     protected $user;
 
     public function __construct()
     {
-            // Charger une seul fois
+            // Charger une seule fois
             return $this->user = Auth::user();
     }
     
-# Affichige des urls créé par l'utilisateur
+# Affichage des urls créé par l'utilisateur
      public function index()
     {
         $shortUrls = ShortUrl::where('user_id', $this->user->id)->orderByDesc('created_at')->paginate(10);
         return view('shorturls.index', compact('shortUrls'));
     }
 
-# Création d'une shorturl
+# En voit sur le formulaire de création d'une shorturl
     public function create()
     {
         return view('shorturls.create');

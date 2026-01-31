@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Define the routes for the application.
+ *
+ * Here we'll define all the routes that are necessary for your application.
+ */
+
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShortUrlController;
 use App\Http\Controllers\RedirectController;
@@ -18,12 +24,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/shorturls',[ShortUrlController::class, 'index'])->name('shorturls.index');
-    Route::get('/shorturls/create',[ShortUrlController::class, 'create'])->name('shorturls.create');
-    Route::post('/shorturls',[ShortUrlController::class, 'store'])->name('shorturls.store');
-    Route::get('/shorturls/{shorturl}/edit',[ShortUrlController::class, 'edit'])->name('shorturls.edit');
-    Route::put('/shorturls/{shorturl}',[ShortUrlController::class, 'update'])->name('shorturls.update');
-    Route::delete('/shorturls/{shorturl}',[ShortUrlController::class, 'destroy'])->name('shorturls.destroy');
+    Route::get('/shorturls', [ShortUrlController::class, 'index'])->name('shorturls.index');
+    Route::get('/shorturls/create', [ShortUrlController::class, 'create'])->name('shorturls.create');
+    Route::post('/shorturls', [ShortUrlController::class, 'store'])->name('shorturls.store');
+    Route::get('/shorturls/{shorturl}/edit', [ShortUrlController::class, 'edit'])->name('shorturls.edit');
+    Route::put('/shorturls/{shorturl}', [ShortUrlController::class, 'update'])->name('shorturls.update');
+    Route::delete('/shorturls/{shorturl}', [ShortUrlController::class, 'destroy'])->name('shorturls.destroy');
 
     Route::post('/shorturls/{shortUrl}/increment-clicks', [ShortUrlController::class, 'incrementClicks'])->name('shorturls.increment-clicks');
 });

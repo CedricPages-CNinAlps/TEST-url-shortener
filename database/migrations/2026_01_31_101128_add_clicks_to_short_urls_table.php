@@ -8,16 +8,20 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up(): void
     {
         Schema::table('short_urls', function (Blueprint $table) {
-            $table->unsignedBigInteger('clicks')->default(0);
+            $table->unsignedInteger('clicks')->default(0);
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down(): void
     {
