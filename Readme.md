@@ -75,6 +75,8 @@ Doxygen Doxyfile
 La documentation sera accessible dans le [lien : ./Documentation/docs/html/index.html](./Documentation/docs/html/index.html)
 En fonction de votre IDE, un clis droit et ouvrir dans le navigateur.
 
+Sinon, celle-ci est disponible directement dans la page https://cedricpages-cninalps.github.io/TEST-url-shortener/
+
 7. Utilisation de l'image Docker
 ```bash
 # Préparation du Fichier SQLite
