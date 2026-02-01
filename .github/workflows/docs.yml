@@ -1,4 +1,5 @@
 name: Doxygen Auto-Docs
+
 on:
   push:
     branches: [ main ]
@@ -10,30 +11,30 @@ permissions:
   id-token: write
 
 jobs:
-  docs:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - name: Install Doxygen
-        run: sudo apt update && sudo apt install -y doxygen graphviz
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y doxygen graphviz
 
-      - name: Generate docs
+      - name: Generate Doxygen
         working-directory: ./Documentation
         run: doxygen Doxyfile
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          path: ./Documentation/docs/html
-
-  deploy:
-    needs: docs
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./Documentation/docs/html
+          user_name: 'GitHub'
+          user_email: 'noreply@github.com'
+          publish_branch: gh-pages
+          force_orphan: true
+          keep_files: false
+          commit_message: '🚀 Deploy Doxygen documentation'
+          full_commit_message: '🚀 Deploy Doxygen documentation [skip ci]'
+          cname: ''
