@@ -1,0 +1,31 @@
+name: Doxygen → GitHub Pages
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Doxygen + Graphviz
+        run: |
+          sudo apt update
+          sudo apt install -y doxygen graphviz
+
+      - name: Generate Doxygen docs
+        working-directory: ./Documentation    # ← Change de répertoire
+        run: doxygen Doxyfile                # ← Doxyfile dans Documentation/
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./Documentation/docs/html  # ← Chemin complet
