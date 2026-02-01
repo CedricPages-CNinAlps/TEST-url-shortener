@@ -16,16 +16,19 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Doxygen + Graphviz
-        run: |
-          sudo apt update
-          sudo apt install -y doxygen graphviz
+        run: sudo apt update && sudo apt install -y doxygen graphviz
 
       - name: Generate Doxygen docs
-        working-directory: ./Documentation    # ← Change de répertoire
-        run: doxygen Doxyfile                # ← Doxyfile dans Documentation/
+        working-directory: ./Documentation
+        run: doxygen Doxyfile
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./Documentation/docs/html  # ← Chemin complet
+          publish_dir: ./Documentation/docs/html
+          # → COPIE TOUT le contenu html à la RACINE gh-pages
+          user: GitHub
+          email: noreply@github.com
+          commit_message: 🚀 Doxygen docs
+          force_orphan: true
