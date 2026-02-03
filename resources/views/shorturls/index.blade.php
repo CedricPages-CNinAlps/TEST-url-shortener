@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <a href="{{ route('shorturls.create') }}">
-                <button type="button" class="btn btn-info" style="margin: 2rem">Ajouter un lien</button>
+                <button type="button" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium mb-4">Ajouter un lien</button>
             </a>
 
             <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-700"
@@ -38,29 +38,29 @@
                         $shortUrlFull = url('/r/'.$shortUrl->code);
                     @endphp
                     <tr>
-                        <td class="whitespace-nowrap px-4 py-2 text-center text-sm font-medium text-gray-900 dark:text-gray-100 space-x-3">{{ $shortUrl->id }}</td>
-                        <td class="whitespace-nowrap px-4 py-2 text-center text-sm font-medium text-gray-900 dark:text-gray-100 space-x-3">
-                            <a href="{{ $shortUrl->original_url }}" target="_blank">{{ $shortUrl->original_url }}</a>
+                        <td class="whitespace-nowrap px-4 py-2 text-center text-sm font-medium text-gray-900 space-x-3">{{ $shortUrl->id }}</td>
+                        <td class="whitespace-nowrap px-4 py-2 text-center text-sm font-medium text-gray-900 space-x-3">
+                            <a href="{{ $shortUrl->original_url }}" target="_blank" class="text-blue-600 hover:text-blue-800">{{ $shortUrl->original_url }}</a>
                         </td>
-                        <td class="whitespace-nowrap px-4 py-2 text-center text-sm font-medium text-gray-900 dark:text-gray-100 space-x-3">
-                            <div class="d-flex align-items-center">
-                                <a href="#" class="me-2 short-url-link" data-url="{{ $shortUrlFull }}" data-id="{{ $shortUrl->id }}">{{ $shortUrlFull }}</a>
-                                <button type="button" class="btn btn-sm btn-outline-secondary btn-copy" data-url="{{ $shortUrlFull }}" data-id="{{ $shortUrl->id }}">
-                                    <i class="fas fa-copy"></i> Copier
+                        <td class="whitespace-nowrap px-4 py-2 text-center text-sm font-medium text-gray-900 space-x-3">
+                            <div class="flex items-center justify-center gap-2">
+                                <a href="#" class="short-url-link text-blue-600 hover:text-blue-800" data-url="{{ $shortUrlFull }}" data-id="{{ $shortUrl->id }}">{{ $shortUrlFull }}</a>
+                                <button type="button" class="px-2 py-1 text-xs bg-gray-200 hover:bg-gray-300 rounded text-gray-700 btn-copy" data-url="{{ $shortUrlFull }}" data-id="{{ $shortUrl->id }}">
+                                    Copier
                                 </button>
                             </div>
                         </td>
-                        <td class="whitespace-nowrap px-4 py-2 text-center text-sm font-medium text-gray-900 dark:text-gray-100">
-                            <span class="clicks-count" data-id="{{ $shortUrl->id }}">{{ $shortUrl->clicks }}</span>
+                        <td class="whitespace-nowrap px-4 py-2 text-center text-sm font-medium text-gray-900">
+                            <span class="clicks-count font-semibold" data-id="{{ $shortUrl->id }}">{{ $shortUrl->clicks }}</span>
                         </td>
-                        <td class="whitespace-nowrap px-4 py-2 text-center text-sm font-medium text-gray-900 dark:text-gray-100 space-x-3">
-                            <a href="{{ route('shorturls.edit', $shortUrl) }}">
-                                <i class="bi bi-pencil-square"></i>Editer</a>
-                            <form action="{{ route('shorturls.destroy', $shortUrl) }}" method="POST">
+                        <td class="whitespace-nowrap px-4 py-2 text-center text-sm font-medium text-gray-900 space-x-3">
+                            <a href="{{ route('shorturls.edit', $shortUrl) }}" class="text-blue-600 hover:text-blue-800 mr-2">
+                                Éditer
+                            </a>
+                            <form action="{{ route('shorturls.destroy', $shortUrl) }}" method="POST" class="inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" onclick="return confirm('Supprimer ce lien ?')">
-                                    <i class="bi bi-trash"></i>
+                                <button type="submit" onclick="return confirm('Supprimer ce lien ?')" class="text-red-600 hover:text-red-800">
                                     Supprimer
                                 </button>
                             </form>
