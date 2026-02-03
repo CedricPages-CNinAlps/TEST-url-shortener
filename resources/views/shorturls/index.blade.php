@@ -11,11 +11,11 @@
                 <button type="button" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium mb-4">Ajouter un lien</button>
             </a>
 
-            <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-700"
-                   style="margin-left: auto; margin-right: auto; margin-bottom: 1rem;">
-                <thead>
+            <div class="overflow-x-auto">
+                <table class="w-full max-w-4xl mx-auto divide-y divide-gray-300 dark:divide-gray-700 table-fixed">
+                    <thead>
                 <tr>
-                    <th class="px-4 py-2 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    <th class="px-4 py-2 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-16">
                         ID
                     </th>
                     <th class="px-4 py-2 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
@@ -24,10 +24,10 @@
                     <th class="px-4 py-2 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         URL courte
                     </th>
-                    <th class="px-4 py-2 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    <th class="px-4 py-2 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-24">
                         Nb Cliques
                     </th>
-                    <th class="px-4 py-2 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    <th class="px-4 py-2 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-32">
                         Action
                     </th>
                 </tr>
@@ -38,29 +38,36 @@
                         $shortUrlFull = url('/r/'.$shortUrl->code);
                     @endphp
                     <tr>
-                        <td class="whitespace-nowrap px-4 py-2 text-center text-sm font-medium text-gray-900 space-x-3">{{ $shortUrl->id }}</td>
-                        <td class="whitespace-nowrap px-4 py-2 text-center text-sm font-medium text-gray-900 space-x-3">
-                            <a href="{{ $shortUrl->original_url }}" target="_blank" class="text-blue-600 hover:text-blue-800">{{ $shortUrl->original_url }}</a>
+                        <td class="px-4 py-2 text-center text-sm font-medium text-gray-900 space-x-3">{{ $shortUrl->id }}</td>
+                        <td class="px-4 py-2 text-center text-sm font-medium text-gray-900 space-x-3">
+                            <a href="{{ $shortUrl->original_url }}" target="_blank"
+                               class="text-blue-600 hover:text-blue-800 truncate block">{{ $shortUrl->original_url }}</a>
                         </td>
-                        <td class="whitespace-nowrap px-4 py-2 text-center text-sm font-medium text-gray-900 space-x-3">
+                        <td class="px-4 py-2 text-center text-sm font-medium text-gray-900 space-x-3">
                             <div class="flex items-center justify-center gap-2">
-                                <a href="#" class="short-url-link text-blue-600 hover:text-blue-800" data-url="{{ $shortUrlFull }}" data-id="{{ $shortUrl->id }}">{{ $shortUrlFull }}</a>
-                                <button type="button" class="px-2 py-1 text-xs bg-gray-200 hover:bg-gray-300 rounded text-gray-700 btn-copy" data-url="{{ $shortUrlFull }}" data-id="{{ $shortUrl->id }}">
+                                <a href="#" class="short-url-link text-blue-600 hover:text-blue-800 truncate block"
+                                   data-url="{{ $shortUrlFull }}" data-id="{{ $shortUrl->id }}">{{ $shortUrlFull }}</a>
+                                <button type="button"
+                                        class="px-2 py-1 text-xs bg-gray-200 hover:bg-gray-300 rounded text-gray-700 btn-copy"
+                                        data-url="{{ $shortUrlFull }}" data-id="{{ $shortUrl->id }}">
                                     Copier
                                 </button>
                             </div>
                         </td>
-                        <td class="whitespace-nowrap px-4 py-2 text-center text-sm font-medium text-gray-900">
-                            <span class="clicks-count font-semibold" data-id="{{ $shortUrl->id }}">{{ $shortUrl->clicks }}</span>
+                        <td class="px-4 py-2 text-center text-sm font-medium text-gray-900">
+                            <span class="clicks-count font-semibold"
+                                  data-id="{{ $shortUrl->id }}">{{ $shortUrl->clicks }}</span>
                         </td>
-                        <td class="whitespace-nowrap px-4 py-2 text-center text-sm font-medium text-gray-900 space-x-3">
-                            <a href="{{ route('shorturls.edit', $shortUrl) }}" class="text-blue-600 hover:text-blue-800 mr-2">
+                        <td class="px-4 py-2 text-center text-sm font-medium text-gray-900 space-x-3">
+                            <a href="{{ route('shorturls.edit', $shortUrl) }}"
+                               class="text-blue-600 hover:text-blue-800 mr-2">
                                 Éditer
                             </a>
                             <form action="{{ route('shorturls.destroy', $shortUrl) }}" method="POST" class="inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" onclick="return confirm('Supprimer ce lien ?')" class="text-red-600 hover:text-red-800">
+                                <button type="submit" onclick="return confirm('Supprimer ce lien ?')"
+                                        class="text-red-600 hover:text-red-800">
                                     Supprimer
                                 </button>
                             </form>
@@ -73,6 +80,7 @@
                 @endforelse
                 </tbody>
             </table>
+            </div>
 
             <div>{{ $shortUrls->links() }}</div>
 
