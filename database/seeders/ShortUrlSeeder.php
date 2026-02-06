@@ -2,6 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\ShortUrl;
+use App\Models\User;
+use Illuminate\Database\Seeder;
+
 /**
  * @extends \Illuminate\Database\Seeder<App\Models\ShortUrl>
  */
@@ -16,9 +20,27 @@ class ShortUrlSeeder extends Seeder
         $users = User::all();
 
         foreach ($users as $user) {
-            // Créer 5-20 URLs par utilisateur
+            // Créer 5-20 URLs par utilisateur avec différents scénarios
             ShortUrl::factory()
-                ->count(rand(5, 20))
+                ->count(rand(3, 8))
+                ->create(['user_id' => $user->id]);
+
+            // Quelques URLs jamais utilisées
+            ShortUrl::factory()
+                ->neverUsed()
+                ->count(rand(1, 3))
+                ->create(['user_id' => $user->id]);
+
+            // Quelques URLs récemment utilisées
+            ShortUrl::factory()
+                ->recentlyUsed()
+                ->count(rand(1, 3))
+                ->create(['user_id' => $user->id]);
+
+            // Quelques URLs avec fort trafic
+            ShortUrl::factory()
+                ->highTraffic()
+                ->count(rand(0, 2))
                 ->create(['user_id' => $user->id]);
         }
 
@@ -30,18 +52,24 @@ class ShortUrlSeeder extends Seeder
                 'user_id' => $testUser->id,
                 'code' => '123456',
                 'original_url' => 'https://www.google.com',
+                'clicks' => 150,
+                'last_used_at' => now()->subDays(2),
             ]);
 
             ShortUrl::factory()->create([
                 'user_id' => $testUser->id,
                 'code' => '789012',
                 'original_url' => 'https://www.github.com',
+                'clicks' => 0,
+                'last_used_at' => null,
             ]);
 
             ShortUrl::factory()->create([
                 'user_id' => $testUser->id,
                 'code' => '345678',
                 'original_url' => 'https://www.laravel.com',
+                'clicks' => 89,
+                'last_used_at' => now()->subMonths(3),
             ]);
         }
     }

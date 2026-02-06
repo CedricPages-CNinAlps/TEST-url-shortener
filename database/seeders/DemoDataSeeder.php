@@ -29,27 +29,37 @@ class DemoDataSeeder extends Seeder
             [
                 'code' => '111111',
                 'original_url' => 'https://www.laravel.com/docs',
-                'description' => 'Documentation Laravel'
+                'description' => 'Documentation Laravel',
+                'clicks' => 245,
+                'last_used_at' => now()->subDays(1),
             ],
             [
                 'code' => '222222',
                 'original_url' => 'https://github.com/laravel/laravel',
-                'description' => 'Laravel sur GitHub'
+                'description' => 'Laravel sur GitHub',
+                'clicks' => 89,
+                'last_used_at' => now()->subWeeks(2),
             ],
             [
                 'code' => '333333',
                 'original_url' => 'https://www.php.net',
-                'description' => 'Site officiel PHP'
+                'description' => 'Site officiel PHP',
+                'clicks' => 0,
+                'last_used_at' => null,
             ],
             [
                 'code' => '444444',
                 'original_url' => 'https://getbootstrap.com',
-                'description' => 'Documentation Bootstrap'
+                'description' => 'Documentation Bootstrap',
+                'clicks' => 156,
+                'last_used_at' => now()->subDays(3),
             ],
             [
                 'code' => '555555',
                 'original_url' => 'https://developer.mozilla.org',
-                'description' => 'MDN Web Docs'
+                'description' => 'MDN Web Docs',
+                'clicks' => 412,
+                'last_used_at' => now()->subHours(6),
             ]
         ];
 
@@ -58,6 +68,8 @@ class DemoDataSeeder extends Seeder
                 'user_id' => $demoUser->id,
                 'code' => $urlData['code'],
                 'original_url' => $urlData['original_url'],
+                'clicks' => $urlData['clicks'],
+                'last_used_at' => $urlData['last_used_at'],
             ]);
         }
 
