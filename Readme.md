@@ -44,6 +44,7 @@ php artisan migrate
 
 # Optionnel : Lancer les seeders pour les données de test
 php artisan db:seed
+#Chaque user créer aura le mot de passe '0123456789'
 
 # Créer le lien de stockage
 php artisan storage:link

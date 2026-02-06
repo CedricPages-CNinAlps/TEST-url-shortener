@@ -96,14 +96,28 @@ CITE_BIB_FILES         =
 # Input configuration
 INPUT                  = ../app/Http/Controllers \
                          ../app/Models \
-                         ../app/Console/Commands
+                         ../app/Console/Commands \
+                         ../database/seeders \
+                         ../database/factories \
+                         ../tests \
+                         ..
 INPUT_ENCODING         = UTF-8
-FILE_PATTERNS          = *.php
+FILE_PATTERNS          = *.php \
+                         *.inc \
+                         *.md
 RECURSIVE              = YES
 EXCLUDE                = ../vendor/ \
                          ../node_modules/ \
                          ../storage/ \
-                         ../bootstrap/cache/
+                         ../bootstrap/cache/ \
+                         ../tests/Bootstrap/ \
+                         ../tests/cache/ \
+                         ../composer.lock \
+                         ../package-lock.json \
+                         ../yarn.lock \
+                         ../.git \
+                         ../.env \
+                         ../.env.example
 EXCLUDE_SYMLINKS       = NO
 EXCLUDE_PATTERNS       =
 EXCLUDE_SYMBOLS        =
@@ -114,8 +128,7 @@ IMAGE_PATH             =
 INPUT_FILTER           =
 FILTER_PATTERNS        =
 FILTER_SOURCE_PATTERNS =
-USE_MDFILE_AS_MAINPAGE = ../Readme.md \
-                         ../Procédure_développement.md
+USE_MDFILE_AS_MAINPAGE = ../Readme.md
 
 # Source browsing configuration
 SOURCE_BROWSER         = YES
