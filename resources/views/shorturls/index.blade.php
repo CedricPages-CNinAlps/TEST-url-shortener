@@ -41,11 +41,12 @@
                         <td class="px-4 py-2 text-center text-sm font-medium text-gray-900 space-x-3">{{ $shortUrl->id }}</td>
                         <td class="px-4 py-2 text-center text-sm font-medium text-gray-900 space-x-3">
                             <a href="{{ $shortUrl->original_url }}" target="_blank"
-                               class="text-blue-600 hover:text-blue-800 truncate block">{{ $shortUrl->original_url }}</a>
+                               class="text-blue-600 hover:text-blue-800 truncate block max-w-xs"
+                               title="{{ $shortUrl->original_url }}">{{ $shortUrl->original_url }}</a>
                         </td>
                         <td class="px-4 py-2 text-center text-sm font-medium text-gray-900 space-x-3">
-                            <div class="flex items-center justify-center gap-2">
-                                <a href="#" class="short-url-link text-blue-600 hover:text-blue-800 truncate block"
+                            <div class="flex items-center justify-center gap-4">
+                                <a href="#" class="short-url-link text-blue-600 hover:text-blue-800 block"
                                    data-url="{{ $shortUrlFull }}" data-id="{{ $shortUrl->id }}">{{ $shortUrlFull }}</a>
                                 <button type="button"
                                         class="px-2 py-1 text-xs bg-gray-200 hover:bg-gray-300 rounded text-gray-700 btn-copy"
