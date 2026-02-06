@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\ShortUrl;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Response;
+
 /**
  * Controller to redirect to the original URL corresponding to a unique code.
  *
@@ -24,10 +26,10 @@ class RedirectController extends Controller
      * If the original URL exists but has been deleted, the method returns a view with an error message.
      * Otherwise, the method redirects the user to the original URL.
      *
-     * @param  string  $code The unique code of the original URL
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     * @param  string $code The unique code of the original URL
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function redirect(string $code): Response|RedirectResponse
+    public function redirect(string $code): View|RedirectResponse|Response
     {
         $shortUrl = ShortUrl::withTrashed()
             ->where('code', $code)
@@ -38,7 +40,7 @@ class RedirectController extends Controller
         }
 
         if ($shortUrl->trashed()) {
-            return response()->view('shorturls.deleted', compact('shortUrl'),410);
+            return response()->view('shorturls.deleted', compact('shortUrl'), 410);
         }
 
         return redirect()->away($shortUrl->original_url);
