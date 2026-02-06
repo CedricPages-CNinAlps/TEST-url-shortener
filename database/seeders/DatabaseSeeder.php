@@ -7,7 +7,16 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 /**
- * Seed the application's database.
+ * This class is responsible for seeding the application's database.
+ *
+ * It uses the `WithoutModelEvents` trait to prevent model events from being executed.
+ *
+ * It includes two seeders: `UserSeeder` and `ShortUrlSeeder`.
+ *
+ * The `UserSeeder` is responsible for creating a user with a random name and email.
+ * The `ShortUrlSeeder` is responsible for creating a short URL with a random URL and title.
+ *
+ * @package Database\Seeders
  */
 class DatabaseSeeder extends Seeder
 {
@@ -15,6 +24,8 @@ class DatabaseSeeder extends Seeder
 
     /**
      * Seed the application's database.
+     *
+     * This method calls the `run` method of the `UserSeeder` and `ShortUrlSeeder` classes.
      *
      * @return void
      */

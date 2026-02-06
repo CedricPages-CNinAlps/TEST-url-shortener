@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\ShortUrl;
 use App\Models\User;
 use Illuminate\Support\Str;
 
 /**
+ * Factory for generating ShortUrl instances.
+ *
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ShortUrl>
  */
 class ShortUrlFactory extends Factory

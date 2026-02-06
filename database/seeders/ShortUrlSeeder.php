@@ -7,7 +7,9 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 
 /**
- * @extends \Illuminate\Database\Seeder<App\Models\ShortUrl>
+ * This class is responsible for seeding the database with short URLs.
+ * It creates short URLs for each user, with different scenarios.
+ * It also creates specific URLs for testing purposes.
  */
 class ShortUrlSeeder extends Seeder
 {
@@ -16,35 +18,35 @@ class ShortUrlSeeder extends Seeder
      */
     public function run(): void
     {
-        // Créer des URLs raccourcies pour chaque utilisateur
+        // Create short URLs for each user
         $users = User::all();
 
         foreach ($users as $user) {
-            // Créer 5-20 URLs par utilisateur avec différents scénarios
+            // Create 5-20 URLs per user with different scenarios
             ShortUrl::factory()
                 ->count(rand(3, 8))
                 ->create(['user_id' => $user->id]);
 
-            // Quelques URLs jamais utilisées
+            // Some URLs never used
             ShortUrl::factory()
                 ->neverUsed()
                 ->count(rand(1, 3))
                 ->create(['user_id' => $user->id]);
 
-            // Quelques URLs récemment utilisées
+            // Some URLs recently used
             ShortUrl::factory()
                 ->recentlyUsed()
                 ->count(rand(1, 3))
                 ->create(['user_id' => $user->id]);
 
-            // Quelques URLs avec fort trafic
+            // Some URLs with high traffic
             ShortUrl::factory()
                 ->highTraffic()
                 ->count(rand(0, 2))
                 ->create(['user_id' => $user->id]);
         }
 
-        // Créer quelques URLs spécifiques pour les tests
+        // Create specific URLs for testing
         $testUser = User::where('email', 'test@example.com')->first();
 
         if ($testUser) {

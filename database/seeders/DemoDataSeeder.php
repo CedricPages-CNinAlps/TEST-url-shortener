@@ -17,40 +17,40 @@ class DemoDataSeeder extends Seeder
      */
     public function run(): void
     {
-        // Créer un utilisateur de démonstration
+        // Create a demo user
         $demoUser = User::factory()->create([
             'name' => 'Demo User',
             'email' => 'demo@example.com',
             'password' => Hash::make('0123456789'),
         ]);
 
-        // Créer des URLs de démonstration avec des codes spécifiques
+        // Create demo URLs with specific codes
         $demoUrls = [
             [
                 'code' => '111111',
                 'original_url' => 'https://www.laravel.com/docs',
-                'description' => 'Documentation Laravel',
+                'description' => 'Laravel documentation',
                 'clicks' => 245,
                 'last_used_at' => now()->subDays(1),
             ],
             [
                 'code' => '222222',
                 'original_url' => 'https://github.com/laravel/laravel',
-                'description' => 'Laravel sur GitHub',
+                'description' => 'Laravel GitHub repository',
                 'clicks' => 89,
                 'last_used_at' => now()->subWeeks(2),
             ],
             [
                 'code' => '333333',
                 'original_url' => 'https://www.php.net',
-                'description' => 'Site officiel PHP',
+                'description' => 'Official PHP website',
                 'clicks' => 0,
                 'last_used_at' => null,
             ],
             [
                 'code' => '444444',
                 'original_url' => 'https://getbootstrap.com',
-                'description' => 'Documentation Bootstrap',
+                'description' => 'Bootstrap documentation',
                 'clicks' => 156,
                 'last_used_at' => now()->subDays(3),
             ],
@@ -68,6 +68,7 @@ class DemoDataSeeder extends Seeder
                 'user_id' => $demoUser->id,
                 'code' => $urlData['code'],
                 'original_url' => $urlData['original_url'],
+                'description' => $urlData['description'],
                 'clicks' => $urlData['clicks'],
                 'last_used_at' => $urlData['last_used_at'],
             ]);
