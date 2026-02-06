@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\ShortUrl;
 use App\Models\User;
 use Illuminate\Support\Str;
@@ -29,11 +30,27 @@ class ShortUrlFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'code' => str_pad(random_int(100000, 999999), 6, '0', STR_PAD_LEFT),
+            'code' => $this->generateAlphanumericCode(),
             'original_url' => $this->faker->url(),
             'clicks' => $this->faker->numberBetween(0, 1000),
             'last_used_at' => $this->faker->dateTimeBetween('-6 months', 'now'),
         ];
+    }
+
+    /**
+     * Generate a 6-character alphanumeric code.
+     */
+    private function generateAlphanumericCode(): string
+    {
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        $charactersLength = strlen($characters);
+        $randomCode = '';
+        
+        for ($i = 0; $i < 6; $i++) {
+            $randomCode .= $characters[random_int(0, $charactersLength - 1)];
+        }
+        
+        return $randomCode;
     }
 
     /**
