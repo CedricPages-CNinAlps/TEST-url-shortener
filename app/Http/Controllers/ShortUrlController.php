@@ -92,7 +92,7 @@ class ShortUrlController extends Controller
     }
 
     /**
-     * Generate a unique random code of 6 characters.
+     * Generate a unique random code of 6 alphanumeric characters.
      *
      * @return string The unique random code.
      * @throws RandomException If generating a unique code fails after multiple attempts
@@ -100,8 +100,17 @@ class ShortUrlController extends Controller
     public function random(): string
     {
         try {
-            return str_pad(random_int(100000, 999999), 6, '0', STR_PAD_LEFT);
+            $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            $charactersLength = strlen($characters);
+            $randomCode = '';
+            
+            for ($i = 0; $i < 6; $i++) {
+                $randomCode .= $characters[random_int(0, $charactersLength - 1)];
+            }
+            
+            return $randomCode;
         } catch (RandomException $e) {
+            throw new RandomException('Failed to generate random code: ' . $e->getMessage());
         }
     }
 
