@@ -1,9 +1,9 @@
 <?php return array (
-  'laravel/breeze' => 
+  'laravel/fortify' => 
   array (
     'providers' => 
     array (
-      0 => 'Laravel\\Breeze\\BreezeServiceProvider',
+      0 => 'Laravel\\Fortify\\FortifyServiceProvider',
     ),
   ),
   'laravel/pail' => 

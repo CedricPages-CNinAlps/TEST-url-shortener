@@ -1,19 +1,15 @@
-<x-public-layout>
-    <x-slot name="header">
-        <h1 class="font-semibold text-xl text-black-800 dark:text-black-200 leading-tight">
-            {{ __('Lien périmé') }}
-        </h1>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <p>Ce lien court avec le code <strong>{{ $shortUrl->code }}</strong> n'est plus valable.</p>
+@section('title', 'Lien périmé')
 
-            <a href="{{ route('shorturls.index') }}">
-                <button type="button" class="btn btn-info" style="margin: 2rem">Retour à la liste</button>
-            </a>
-        </div>
+@section('content')
+<div class="card" style="max-width: 600px; margin: 0 auto; text-align: center;">
+    <h2 style="margin-bottom: 2rem;">Lien périmé</h2>
+    
+    <p style="margin-bottom: 2rem;">Ce lien court avec le code <strong>{{ $shortUrl->code }}</strong> n'est plus valable.</p>
 
-
-    </div>
-</x-public-layout>
+    <a href="{{ route('shorturls.index') }}">
+        <button type="button" class="btn">Retour à la liste</button>
+    </a>
+</div>
+@endsection
