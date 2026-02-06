@@ -112,10 +112,13 @@ class ShortUrlController extends Controller
      * @param  int $id The ID of the shortened URL
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function edit(ShortUrl $shortUrl, int $id): Factory|View
+    public function edit(ShortUrl $id): Factory|View
     {
-        $shortUrl = ShortUrl::where('user_id', $this->user->id)->findOrFail($id);
-        return view('shorturls.edit', compact('shortUrl'));
+        if ($id->user_id !== $this->user->id) {
+            abort(403);
+        }
+        
+        return view('shorturls.edit', ['shortUrl' => $id]);
     }
 
     /**
@@ -129,14 +132,17 @@ class ShortUrlController extends Controller
      * @param  int  $id
      * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, int $id): View|RedirectResponse
+    public function update(Request $request, ShortUrl $id): View|RedirectResponse
     {
-        $shortUrl = ShortUrl::findOrFail($id);
+        if ($id->user_id !== $this->user->id) {
+            abort(403);
+        }
+        
         $request->validate([
             'original_url' => ['required', 'url'],
         ]);
 
-        $shortUrl->update([
+        $id->update([
             'original_url' => $request->input('original_url'),
         ]);
 
@@ -152,10 +158,13 @@ class ShortUrlController extends Controller
      * @param  int  $id The ID of the shortened URL
      * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
-    public function destroy(ShortUrl $shortUrl, int $id): View|RedirectResponse
+    public function destroy(ShortUrl $id): View|RedirectResponse
     {
-        $shortUrl = ShortUrl::where('user_id', $this->user->id)->findOrFail($id);
-        $shortUrl->delete();
+        if ($id->user_id !== $this->user->id) {
+            abort(403);
+        }
+        
+        $id->delete();
         return redirect()->route('shorturls.index')->with('status','Shortened URL deleted successfully.');
     }
 
