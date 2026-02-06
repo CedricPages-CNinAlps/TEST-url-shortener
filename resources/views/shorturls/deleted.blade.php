@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-public-layout>
     <x-slot name="header">
         <h1 class="font-semibold text-xl text-black-800 dark:text-black-200 leading-tight">
             {{ __('Lien périmé') }}
@@ -16,4 +16,4 @@
 
 
     </div>
-</x-app-layout>
+</x-public-layout>

@@ -46,7 +46,7 @@ class ShortUrlTest extends TestCase
         ShortUrl::factory()->create(['user_id' => $user2->id]);
 
         $response = $this->actingAs($user1)
-            ->post('/shorturls');
+            ->get('/shorturls');
 
         $response->assertStatus(200);
         $this->assertEquals(1,$response->viewData('shortUrls')->count());
