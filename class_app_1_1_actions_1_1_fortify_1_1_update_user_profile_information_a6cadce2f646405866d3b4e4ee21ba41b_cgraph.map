@@ -1,0 +1,5 @@
+<map id="App\Actions\Fortify\UpdateUserProfileInformation\update" name="App\Actions\Fortify\UpdateUserProfileInformation\update">
+<area shape="rect" id="Node000001" title="Validate and update the given user&#39;s profile information." alt="" coords="5,5,243,68"/>
+<area shape="rect" id="Node000002" href="$class_app_1_1_actions_1_1_fortify_1_1_update_user_profile_information.html#a12376ec41464eb9b9b73bbbd73e05434" title="Update the given verified user&#39;s profile information." alt="" coords="291,5,528,68"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="243,34,277,34,277,39,243,39"/>
+</map>

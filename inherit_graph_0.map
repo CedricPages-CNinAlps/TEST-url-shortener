@@ -1,0 +1,27 @@
+<map id="Graphe hiérarchique des classes" name="Graphe hiérarchique des classes">
+<area shape="rect" id="Node000000" href="$class_app_1_1_http_1_1_controllers_1_1_controller.html" title=" " alt="" coords="5,423,172,468"/>
+<area shape="rect" id="Node000001" href="$class_app_1_1_http_1_1_controllers_1_1_auth_1_1_authenticated_session_controller.html" title=" " alt="" coords="221,5,510,51"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="89,409,96,335,116,242,133,192,155,144,183,100,218,61,235,49,238,53,222,65,187,103,160,147,138,194,122,243,102,336,94,409"/>
+<area shape="rect" id="Node000002" href="$class_app_1_1_http_1_1_controllers_1_1_auth_1_1_confirmable_password_controller.html" title=" " alt="" coords="220,75,511,120"/>
+<area shape="poly" id="edge2_Node000000_Node000002" title=" " alt="" coords="92,409,104,348,126,272,143,233,163,195,188,160,218,130,236,118,239,122,222,134,192,164,168,198,148,236,131,274,109,349,97,410"/>
+<area shape="rect" id="Node000003" href="$class_app_1_1_http_1_1_controllers_1_1_auth_1_1_email_verification_notification_controller.html" title=" " alt="" coords="234,145,497,207"/>
+<area shape="poly" id="edge3_Node000000_Node000003" title=" " alt="" coords="99,409,115,365,141,313,175,261,218,217,235,205,238,210,222,221,179,264,145,316,120,367,103,411"/>
+<area shape="rect" id="Node000004" href="$class_app_1_1_http_1_1_controllers_1_1_auth_1_1_email_verification_prompt_controller.html" title=" " alt="" coords="248,231,483,294"/>
+<area shape="poly" id="edge4_Node000000_Node000004" title=" " alt="" coords="112,410,157,356,186,328,219,304,246,290,249,295,221,309,190,332,161,359,116,413"/>
+<area shape="rect" id="Node000005" href="$class_app_1_1_http_1_1_controllers_1_1_auth_1_1_new_password_controller.html" title=" " alt="" coords="247,319,484,364"/>
+<area shape="poly" id="edge5_Node000000_Node000005" title=" " alt="" coords="138,413,177,392,219,374,256,361,257,367,221,378,179,397,140,418"/>
+<area shape="rect" id="Node000006" href="$class_app_1_1_http_1_1_controllers_1_1_auth_1_1_password_controller.html" title=" " alt="" coords="263,388,467,433"/>
+<area shape="poly" id="edge6_Node000000_Node000006" title=" " alt="" coords="185,431,263,421,263,426,186,436"/>
+<area shape="rect" id="Node000007" href="$class_app_1_1_http_1_1_controllers_1_1_auth_1_1_password_reset_link_controller.html" title=" " alt="" coords="227,457,503,503"/>
+<area shape="poly" id="edge7_Node000000_Node000007" title=" " alt="" coords="186,455,227,460,227,465,185,460"/>
+<area shape="rect" id="Node000008" href="$class_app_1_1_http_1_1_controllers_1_1_auth_1_1_registered_user_controller.html" title=" " alt="" coords="243,527,488,572"/>
+<area shape="poly" id="edge8_Node000000_Node000008" title=" " alt="" coords="140,473,179,494,221,512,257,524,256,529,219,517,177,498,138,478"/>
+<area shape="rect" id="Node000009" href="$class_app_1_1_http_1_1_controllers_1_1_auth_1_1_verify_email_controller.html" title=" " alt="" coords="258,596,473,641"/>
+<area shape="poly" id="edge9_Node000000_Node000009" title=" " alt="" coords="115,478,160,532,189,559,221,582,259,598,257,603,219,586,186,563,156,536,111,481"/>
+<area shape="rect" id="Node000010" href="$class_app_1_1_http_1_1_controllers_1_1_profile_controller.html" title=" " alt="" coords="282,665,449,711"/>
+<area shape="poly" id="edge10_Node000000_Node000010" title=" " alt="" coords="105,480,122,520,148,567,181,613,222,651,251,667,283,677,281,682,249,672,218,655,177,616,143,570,118,523,100,482"/>
+<area shape="rect" id="Node000011" href="$class_app_1_1_http_1_1_controllers_1_1_redirect_controller.html" title=" " alt="" coords="282,735,449,780"/>
+<area shape="poly" id="edge11_Node000000_Node000011" title=" " alt="" coords="99,481,113,534,137,600,172,665,195,695,222,721,250,738,282,748,281,753,248,742,218,725,191,698,168,668,132,602,108,536,94,482"/>
+<area shape="rect" id="Node000012" href="$class_app_1_1_http_1_1_controllers_1_1_short_url_controller.html" title="Class ShortUrlController Handles the logic for the shortened URLs." alt="" coords="282,804,449,849"/>
+<area shape="poly" id="edge12_Node000000_Node000012" title=" " alt="" coords="95,481,105,548,127,632,143,675,164,717,190,756,222,790,250,808,283,818,281,824,248,813,218,794,186,760,159,720,138,677,122,633,100,549,90,482"/>
+</map>

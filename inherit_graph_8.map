@@ -1,0 +1,10 @@
+<map id="Graphe hiérarchique des classes" name="Graphe hiérarchique des classes">
+<area shape="rect" id="Node000000" href="$class_illuminate.html" title=" " alt="" coords="5,19,96,47"/>
+<area shape="rect" id="Node000001" href="$class_database_1_1_factories_1_1_short_url_factory.html" title="Factory for generating ShortUrl instances." alt="" coords="144,5,305,51"/>
+<area shape="poly" id="edge31_Node000000_Node000001" title=" " alt="" coords="110,29,144,28,144,33,110,34"/>
+<area shape="rect" id="Node000003" href="$class_database_1_1_factories_1_1_user_factory.html" title="\Databaseloquent\Factories\Factory&lt;\App\Models\User&gt;" alt="" coords="144,75,305,120"/>
+<area shape="poly" id="edge32_Node000000_Node000003" title=" " alt="" coords="103,50,164,72,162,77,101,55"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="13,75,88,103"/>
+<area shape="poly" id="edge33_Node000002_Node000001" title=" " alt="" coords="100,69,159,48,161,53,102,74"/>
+<area shape="poly" id="edge34_Node000002_Node000003" title=" " alt="" coords="102,89,144,91,144,96,102,94"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="App\Http\Controllers\ShortUrlController" name="App\Http\Controllers\ShortUrlController">
+<area shape="rect" id="Node000001" title="Class ShortUrlController Handles the logic for the shortened URLs." alt="" coords="68,161,227,433"/>
+<area shape="rect" id="Node000002" href="$class_app_1_1_http_1_1_controllers_1_1_controller.html" title=" " alt="" coords="5,5,164,96"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,109,115,161,110,162,97,110"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="188,14,235,87"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="205,88,189,146,184,144,199,87"/>
+</map>

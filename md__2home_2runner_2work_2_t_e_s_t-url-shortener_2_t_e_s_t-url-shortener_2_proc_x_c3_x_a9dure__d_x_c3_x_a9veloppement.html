@@ -1,0 +1,679 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>URL Shortener: Exercice technique Laravel</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">URL Shortener<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">A Laravel-based URL shortener application</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('md__2home_2runner_2work_2_t_e_s_t-url-shortener_2_t_e_s_t-url-shortener_2_proc_x_c3_x_a9dure__d_x_c3_x_a9veloppement.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Exercice technique Laravel</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md0"></a>Création d'un raccourcisseur d'URL en Laravel 12 et PHP &gt;= 8.2</p>
+<p>Vous trouverez ci-dessous la procédure de création du projet. Pour les besoins du projet, nous publierons exceptionnellement le .env, ce qui ne doit pas être fait en temps normal ! Repo Git : <a href="https://github.com/CedricPages-CNinAlps/TEST-url-shortener.git">https://github.com/CedricPages-CNinAlps/TEST-url-shortener.git</a></p>
+<p>Initialisation du projet dans la branche master</p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+1. Installation et Configuration</h1>
+<h2><a class="anchor" id="autotoc_md2"></a>
+1.1 Création du projet</h2>
+<div class="fragment"><div class="line">composer create-project laravel/laravel TEST-url-shortener &quot;12.*&quot;</div>
+<div class="line">cd url-shortener</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3"></a>
+1.2 Configuration de SQLite</h2>
+<div class="fragment"><div class="line">touch database/database.sqlite</div>
+</div><!-- fragment --><p> Dans le .env, ajout du chemin d'accès à la BD </p><div class="fragment"><div class="line"># .env</div>
+<div class="line">DB_DATABASE=/database/database.sqlite</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md4"></a>
+1.3 Mise en place de l'Authentification simple</h2>
+<p>Création de la branche Git "Breeze" </p><div class="fragment"><div class="line">git checkout -b Breeze</div>
+</div><!-- fragment --><p> Installation via Composer de Breeze et vérification du fonctionnement </p><div class="fragment"><div class="line">composer require laravel/breeze --dev</div>
+<div class="line">php artisan breeze:install blade</div>
+<div class="line">npm install</div>
+<div class="line">php artisan migrate</div>
+<div class="line">php artisan serve</div>
+</div><!-- fragment --><p> Dans PHPStorm, j'utilise l'outil de création d'une "Pull request" et merge de celle-ci dans la branch "master". Et retour sur la branche d'origine et j'importe les développements. </p><div class="fragment"><div class="line">git checkout master</div>
+<div class="line">git pull origin master</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md5"></a>
+2. Mise en place des Modèles et Migration</h1>
+<p>Création de la branche Git "Migration-ShortUrl" </p><div class="fragment"><div class="line">git checkout -b Migration-ShortUrl</div>
+</div><!-- fragment --><p> Pour la création du modèle et la migration associé, on vient créer cela via la ligne de commande suivante : </p><div class="fragment"><div class="line">php artisan make:model ShortUrl -m</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md6"></a>
+2.1 Migration</h2>
+<p>Pour un bon fonctionnement, je viens compléter ma migration avec les lignes suivantes : </p><div class="fragment"><div class="line">// Cette ligne crée une colonne user_id liée à users.id, et si tu supprimes un user, tous les enregistrements qui lui sont rattachés dans cette table seront supprimés automatiquement. </div>
+<div class="line">$table-&gt;foreignId(&#39;user_id&#39;)-&gt;constrained()-&gt;onDelete(&#39;cascade&#39;);</div>
+<div class="line">// Crée une colonne code de type VARCHAR(16) avec 16 caratères max</div>
+<div class="line">$table-&gt;string(&#39;code&#39;,16)-&gt;unique();</div>
+<div class="line">//Crée une colonne pour l&#39;enregistrement de l&#39;Url</div>
+<div class="line">$table-&gt;text(&#39;original_url&#39;);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
+2.2 Modèle</h2>
+<p>Nous mettons ensuite en place le modèle ci-dessous : </p><div class="fragment"><div class="line">class ShortUrl extends Model</div>
+<div class="line">{</div>
+<div class="line">    // Ajoute le trait permettant d’utiliser des factories pour ce modèle, utile pour les tests, les seeders.</div>
+<div class="line">    use HasFactory;</div>
+<div class="line">    </div>
+<div class="line">    // Déclare quels champs peuvent être remplis en assignation de masse</div>
+<div class="line">    protected $fillable = [</div>
+<div class="line">       &#39;user_id&#39;,</div>
+<div class="line">       &#39;code&#39;,</div>
+<div class="line">       &#39;original_url&#39; </div>
+<div class="line">    ];</div>
+<div class="line">    </div>
+<div class="line">    //  Cette méthode déclare une relation Many-to-One : chaque ShortUrl appartient à un User.</div>
+<div class="line">    public function user() {</div>
+<div class="line">        return $this-&gt;belongsTo(User::class);</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md8"></a>
+2.3 Lancement de la migration</h2>
+<div class="fragment"><div class="line">php artisan migrate</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md9"></a>
+3. Mise en place du contrôleur, routes et views</h1>
+<p>Création de la branche Git "Controller-ShortUrl" </p><div class="fragment"><div class="line">git checkout -b Controller-ShortUrl</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md10"></a>
+3.1 Controller ShortUrlController</h2>
+<p>Pour la création du contrôleur, on vient créer cela via la ligne de commande suivante : </p><div class="fragment"><div class="line">php artisan make:controller ShortUrlController</div>
+</div><!-- fragment --><p>Mise en place des méthodes suivantes : </p><div class="fragment"><div class="line"># Globalisation de la variable d&#39;appel du User Authentifié</div>
+<div class="line">    // Variable accessible dans TOUTES les méthodes ce qui permet de réduire les nombre d&#39;appels</div>
+<div class="line">    protected $user;</div>
+<div class="line"> </div>
+<div class="line">    public function __construct()</div>
+<div class="line">    {</div>
+<div class="line">            // Charger une seule fois</div>
+<div class="line">            return $this-&gt;user = Auth::user();</div>
+<div class="line">    }</div>
+<div class="line">    </div>
+<div class="line"># Affichage des urls créé par l&#39;utilisateur</div>
+<div class="line">     public function index()</div>
+<div class="line">    {</div>
+<div class="line">        $shortUrls = ShortUrl::where(&#39;user_id&#39;, $this-&gt;user-&gt;id)-&gt;orderByDesc(&#39;created_at&#39;)-&gt;paginate(10);</div>
+<div class="line">        return view(&#39;shorturls.index&#39;, compact(&#39;shortUrls&#39;));</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line"># En voit sur le formulaire de création d&#39;une shorturl</div>
+<div class="line">    public function create()</div>
+<div class="line">    {</div>
+<div class="line">        return view(&#39;shorturls.create&#39;);</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line"># Enregistrement d&#39;une shorturl</div>
+<div class="line">    public function store(Request $request)</div>
+<div class="line">    {</div>
+<div class="line">        $request-&gt;validate([</div>
+<div class="line">           &#39;original_url&#39; =&gt; [&#39;required&#39;, &#39;url&#39;],</div>
+<div class="line">        ]);</div>
+<div class="line">        </div>
+<div class="line">        do {</div>
+<div class="line">          $code = $this-&gt;random();</div>
+<div class="line">        } while (ShortUrl::where(&#39;code&#39;,$code)-&gt;exists());</div>
+<div class="line"> </div>
+<div class="line">        ShortUrl::created([</div>
+<div class="line">        // Lie l&#39;information créé au USER connecté</div>
+<div class="line">            &#39;user_id&#39; =&gt; $this-&gt;user-&gt;id,</div>
+<div class="line">            &#39;code&#39; =&gt; $code,</div>
+<div class="line">            &#39;original_url&#39; =&gt; $request-&gt;input(&#39;original_url&#39;),</div>
+<div class="line">        ]);</div>
+<div class="line"> </div>
+<div class="line">        return redirect()-&gt;route(&#39;shorturls.index&#39;)-&gt;with(&#39;status&#39;,&#39;Lien raccourci créé avec succès.&#39;);</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line"># Création d&#39;un chiffre unique pour la shorturl</div>
+<div class="line">    public function random(){</div>
+<div class="line">        try {</div>
+<div class="line">            return str_pad(random_int(100000, 999999), 6, &#39;0&#39;, STR_PAD_LEFT);</div>
+<div class="line">        } catch (RandomException $e) {</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line"># Edition d&#39;une shorturl</div>
+<div class="line">   public function edit(ShortUrl $shortUrl, $id)</div>
+<div class="line">    {</div>
+<div class="line">        // Vérifie que l&#39;URL appartient bien à l&#39;utilisateur connecté</div>
+<div class="line">        $shortUrl = ShortUrl::where(&#39;user_id&#39;, $this-&gt;user-&gt;id)-&gt;findOrFail($id);</div>
+<div class="line">        return view(&#39;shorturls.edit&#39;, compact(&#39;shortUrl&#39;));</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line"># Mise à jour d&#39;une url d&#39;origine</div>
+<div class="line">public function update(Request $request,$id)</div>
+<div class="line">    {</div>
+<div class="line">        $shortUrl = ShortUrl::findOrFail($id);</div>
+<div class="line">        $request-&gt;validate([</div>
+<div class="line">            &#39;original_url&#39; =&gt; [&#39;required&#39;, &#39;url&#39;],</div>
+<div class="line">        ]);</div>
+<div class="line"> </div>
+<div class="line">        $shortUrl-&gt;update([</div>
+<div class="line">            &#39;original_url&#39; =&gt; $request-&gt;input(&#39;original_url&#39;),</div>
+<div class="line">        ]);</div>
+<div class="line"> </div>
+<div class="line">        return redirect()-&gt;route(&#39;shorturls.index&#39;)-&gt;with(&#39;status&#39;,&#39;Lien mis à jour.&#39;);</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line"># Suppression d&#39;une url</div>
+<div class="line">    public function destroy(ShortUrl $shortUrl, $id)</div>
+<div class="line">    {</div>
+<div class="line">        $shortUrl = ShortUrl::where(&#39;user_id&#39;, $this-&gt;user-&gt;id)-&gt;findOrFail($id);</div>
+<div class="line">        $shortUrl-&gt;delete();</div>
+<div class="line">        return redirect()-&gt;route(&#39;shorturls.index&#39;)-&gt;with(&#39;status&#39;,&#39;Lien supprimé.&#39;);</div>
+<div class="line">    }</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md11"></a>
+3.2 Création des routes</h2>
+<p>Pour un bon fonctionnement du système, je viens éditer mes routes pour mes différentes méthodes : </p><div class="fragment"><div class="line">Route::get(&#39;/shorturls&#39;,[ShortUrlController::class, &#39;index&#39;])-&gt;name(&#39;shorturls.index&#39;);</div>
+<div class="line">Route::get(&#39;/shorturls/create&#39;,[ShortUrlController::class, &#39;create&#39;])-&gt;name(&#39;shorturls.create&#39;);</div>
+<div class="line">Route::post(&#39;/shorturls/store&#39;,[ShortUrlController::class, &#39;store&#39;])-&gt;name(&#39;shorturls.store&#39;);</div>
+<div class="line">Route::get(&#39;/shorturls/{shorturl}/edit&#39;,[ShortUrlController::class, &#39;edit&#39;])-&gt;name(&#39;shorturls.edit&#39;);</div>
+<div class="line">Route::put(&#39;/shorturls/{shorturl}&#39;,[ShortUrlController::class, &#39;update&#39;])-&gt;name(&#39;shorturls.update&#39;);</div>
+<div class="line">Route::delete(&#39;/shorturls/{shorturl}&#39;,[ShortUrlController::class, &#39;destroy&#39;])-&gt;name(&#39;shorturls.destroy&#39;);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md12"></a>
+3.3 Mise en place des views</h2>
+<p>Pour ce faire, nous faisons 3 views :</p><ul>
+<li><a class="el" href="index_8blade_8php.html">index.blade.php</a> : qui affiche les informations sur nos URLs ;</li>
+<li><a class="el" href="create_8blade_8php.html">create.blade.php</a> : qui permettra de créer une url ;</li>
+<li>edite.blade.php : qui affiche l'url existante, que l'on pourra remplace.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md13"></a>
+3.4 Controller de redirection</h2>
+<h3><a class="anchor" id="autotoc_md14"></a>
+3.4.1 Controller</h3>
+<p>Maintenant que nous avons une url raccourcis, nous allons faire un nouveau controller, qui permettra la gestion des redirections. </p><div class="fragment"><div class="line">php artisan make:controller RedirectController</div>
+</div><!-- fragment --><p>Mise en place de la méthode suivante : </p><div class="fragment"><div class="line">public function redirect(string $code)</div>
+<div class="line">    {</div>
+<div class="line">        $shortUrl = ShortUrl::withTrashed()</div>
+<div class="line">            -&gt;where(&#39;code&#39;, $code)</div>
+<div class="line">            -&gt;first();</div>
+<div class="line">        </div>
+<div class="line">        // Lien non trouvé</div>
+<div class="line">        if (! $shortUrl) {</div>
+<div class="line">            abort(404);</div>
+<div class="line">        }</div>
+<div class="line">        </div>
+<div class="line">        // Lien supprimé =&gt; page spécifique</div>
+<div class="line">        if ($shortUrl-&gt;trashed()) {</div>
+<div class="line">            return response()-&gt;view(&#39;shorturls.deleted&#39;, compact(&#39;shortUrl&#39;),410);</div>
+<div class="line">        }</div>
+<div class="line">        </div>
+<div class="line">        return redirect()-&gt;away($shortUrl-&gt;original_url);</div>
+<div class="line">    }</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md15"></a>
+3.4.2 Mise en place d'une route publique</h3>
+<div class="fragment"><div class="line">Route::get(&#39;/r/{code}&#39;, [RedirectController::class, &#39;redirect&#39;])-&gt;name(&#39;shorturls.redirect&#39;);</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md16"></a>
+3.4.3 Création d'une view lien plus valable</h3>
+<p>Nous faisons une view <a class="el" href="deleted_8blade_8php.html">deleted.blade.php</a> complémentaire.</p>
+<h3><a class="anchor" id="autotoc_md17"></a>
+3.4.4 Mise en place d'un champ 'deleted_at' dans ma table short_urls</h3>
+<p>Afin d'avoir un bon fonctionnement des redirections, nous ajoutons la notion de SoftDeletes.</p><ul>
+<li>Modification du model ShortUrl en ajoutant : <div class="fragment"><div class="line">use Illuminate\Database\Eloquent\SoftDeletes;</div>
+<div class="line">use HasFactory, SoftDeletes;</div>
+</div><!-- fragment --></li>
+<li>Ensuite, création d'une nouvelle migration, pour l'intégration du champ 'deleted_at' : <div class="fragment"><div class="line">php artisan make:migration add_deleted_at_to_short_urls_table --table=short_url</div>
+<div class="line">php artisan migrate</div>
+</div><!-- fragment --></li>
+</ul>
+<p>A ce stade, nous avons un projet répondant au cahier des charges primaire :</p><ul>
+<li>Zone d'administration avec création d'un compte ou connection ;</li>
+<li>Un tableau affichant les liens courts et pagination ;</li>
+<li>Possibilité de copier le lien court (BONUS) ;</li>
+<li>Gestion des liens, ajout, suppression et édition ;</li>
+<li>Redirection de l'URL avec endpoint fonctionnel ;</li>
+<li>Les liens supprimés n'affichent pas une 404 (BONUS).</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md18"></a>
+4. Mise en place des tests unitaires / fonctionnels</h1>
+<p>Création de la branche Git "Tests-ShortUrl" </p><div class="fragment"><div class="line">git checkout -b Tests-ShortUrl</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md19"></a>
+4.1 Tests zone d'administration</h2>
+<p>Pour ce faire, nous allons déjà créer un test de Feature via : </p><div class="fragment"><div class="line">php artisan make:test ShortUrlTest</div>
+</div><!-- fragment --><p>J'édite 3 tests </p><div class="fragment"><div class="line"># Test 1 : Accès invité au dashboard</div>
+<div class="line">Ce que ça teste : Un utilisateur non connecté qui essaie d&#39;accéder à /dashboard est redirigé vers /login.</div>
+<div class="line"> </div>
+<div class="line">    public function test_guest_cannot_access_dashboard(): void</div>
+<div class="line">    {</div>
+<div class="line">        $this-&gt;get(&#39;/dashboard&#39;)</div>
+<div class="line">        -&gt;assertRedirect(&#39;/login&#39;);;</div>
+<div class="line">    }</div>
+</div><!-- fragment --><div class="fragment"><div class="line"># Test 2 : Création d&#39;une ShortUrl</div>
+<div class="line">Ce que ça teste : Un utilisateur connecté peut créer une shortUrl.</div>
+<div class="line">User::factory()-&gt;create() : crée un utilisateur fictif en BDD</div>
+<div class="line">actingAs($user) : simule une connexion avec cet utilisateur</div>
+<div class="line">post(&#39;/shorturls&#39;, [...]) : simule un POST avec les données du formulaire</div>
+<div class="line"> </div>
+<div class="line">    public function test_user_can_create_short_url(): void</div>
+<div class="line">    {</div>
+<div class="line">        $user = User::factory()-&gt;create();</div>
+<div class="line"> </div>
+<div class="line">        $response = $this-&gt;actingAs($user)</div>
+<div class="line">            -&gt;post(&#39;/shorturls&#39;, [</div>
+<div class="line">                &#39;original_url&#39; =&gt; &#39;https://www.exemple.com&#39;</div>
+<div class="line">            ]);</div>
+<div class="line"> </div>
+<div class="line">        $response-&gt;assertRedirect(&#39;/shorturls&#39;);</div>
+<div class="line">        $this-&gt;assertDatabaseCount(&#39;short_urls&#39;,1);</div>
+<div class="line">        $this-&gt;assertDatabaseHas(&#39;short_urls&#39;,[</div>
+<div class="line">            &#39;user_id&#39; =&gt; $user-&gt;id,</div>
+<div class="line">            &#39;original_url&#39; =&gt; &#39;https://www.exemple.com&#39;</div>
+<div class="line">        ]);</div>
+<div class="line">    }</div>
+</div><!-- fragment --><div class="fragment"><div class="line"># Test 3 : Isolation des données utilisateur</div>
+<div class="line">Ce que ça teste : User1 ne voit QUE ses propres liens, pas ceux de User2.</div>
+<div class="line">Crée 2 users + 1 ShortUrl chacun</div>
+<div class="line">Se connecte comme User1 et fait un GET /shorturls</div>
+<div class="line"> </div>
+<div class="line">    public function test_user_can_sees_only_own_links(): void</div>
+<div class="line">    {</div>
+<div class="line">        $user1 = User::factory()-&gt;create();</div>
+<div class="line">        $user2 = User::factory()-&gt;create();</div>
+<div class="line"> </div>
+<div class="line">        ShortUrl::factory()-&gt;create([&#39;user_id&#39; =&gt; $user1-&gt;id]);</div>
+<div class="line">        ShortUrl::factory()-&gt;create([&#39;user_id&#39; =&gt; $user2-&gt;id]);</div>
+<div class="line"> </div>
+<div class="line">        $response = $this-&gt;actingAs($user1)</div>
+<div class="line">            -&gt;post(&#39;/shorturls&#39;);</div>
+<div class="line"> </div>
+<div class="line">        $response-&gt;assertStatus(200);</div>
+<div class="line">        $this-&gt;assertEquals(1,$response-&gt;viewData(&#39;shortUrls&#39;)-&gt;count());</div>
+<div class="line">    }</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md20"></a>
+4.2 Test pour la redirection</h2>
+<p>Pour ce faire, nous allons déjà créer un test de Feature via : </p><div class="fragment"><div class="line">php artisan make:test RedirectTest</div>
+</div><!-- fragment --><p>J'édite 3 tests </p><div class="fragment"><div class="line">#Test 1 : Redirection vers l&#39;URL originale</div>
+<div class="line">Ce que ça teste : Quand on clique sur /r/123456, on est redirigé vers https://exemple.com.</div>
+<div class="line"> </div>
+<div class="line">    public function test_redirects_to_original_url(): void</div>
+<div class="line">    {</div>
+<div class="line">        $short = ShortUrl::factory()-&gt;create([</div>
+<div class="line">            &#39;original_url&#39; =&gt; &#39;https://exemple.com&#39;,</div>
+<div class="line">            &#39;code&#39; =&gt; 123456,</div>
+<div class="line">        ]);</div>
+<div class="line"> </div>
+<div class="line">        $response = $this-&gt;get(&#39;/r/123456&#39;);</div>
+<div class="line"> </div>
+<div class="line">        $response-&gt;assertRedirect(&#39;https://exemple.com&#39;);</div>
+<div class="line">        $this-&gt;assertDatabaseHas(&#39;short_urls&#39;,[</div>
+<div class="line">            &#39;id&#39; =&gt; $short-&gt;id,</div>
+<div class="line">        ]);</div>
+<div class="line">    }</div>
+</div><!-- fragment --><div class="fragment"><div class="line"># Test 2 : 404 si code inexistant</div>
+<div class="line">Ce que ça teste : Si le code n&#39;existe pas en base → erreur 404 Not Found.</div>
+<div class="line"> </div>
+<div class="line">    public function test_returns_404_when_not_found(): void</div>
+<div class="line">    {</div>
+<div class="line">        $this-&gt;get(&#39;/r/UNKNOWN&#39;)-&gt;assertStatus(404);</div>
+<div class="line">    }</div>
+</div><!-- fragment --><div class="fragment"><div class="line">#Test 3 : 410 si lien supprimé </div>
+<div class="line">Ce que ça teste : Si quelqu&#39;un essaie d&#39;accéder à un lien supprimé → statut 410 Gone (meilleur que 404 pour les liens supprimés).</div>
+<div class="line"> </div>
+<div class="line">    public function test_deleted_link_shows_deleted_page(): void</div>
+<div class="line">    {</div>
+<div class="line">        $short = ShortUrl::factory()-&gt;create([</div>
+<div class="line">            &#39;original_url&#39; =&gt; &#39;https://exemple.com&#39;,</div>
+<div class="line">            &#39;code&#39; =&gt; 123456,</div>
+<div class="line">        ]);</div>
+<div class="line"> </div>
+<div class="line">        $short-&gt;delete();</div>
+<div class="line">        $this-&gt;get(&#39;/r/123456&#39;)-&gt;assertStatus(410);</div>
+<div class="line">    }</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md21"></a>
+4.3 Factory pour ShortUrl</h2>
+<p>Pour ce faire, nous allons déjà créer un test de Factory via : </p><div class="fragment"><div class="line">php artisan make:factory ShortUrlFactory --model=ShortUrl</div>
+</div><!-- fragment --><p>J'édite le factory suivant : </p><div class="fragment"><div class="line">class ShortUrlFactory extends Factory</div>
+<div class="line">{</div>
+<div class="line">// Dit à Laravel : cette factory crée des enregistrements pour le modèle ShortUrl.</div>
+<div class="line">    protected $model = ShortUrl::class;</div>
+<div class="line"> </div>
+<div class="line">    public function definition(): array</div>
+<div class="line">    {</div>
+<div class="line">        return [</div>
+<div class="line">            // Ça crée juste une promesse d&#39;utilisateur.</div>
+<div class="line">            &#39;user_id&#39; =&gt; User::factory(),</div>
+<div class="line">            // Génère un code comme 123456 (chiffres, 6 caractères).</div>
+<div class="line">            &#39;code&#39; =&gt; str_pad(random_int(100000, 999999), 6, &#39;0&#39;, STR_PAD_LEFT),</div>
+<div class="line">            // Génère une URL fausse</div>
+<div class="line">            &#39;original_url&#39; =&gt; $this-&gt;faker-&gt;url(),</div>
+<div class="line">        ];</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md22"></a>
+4.4 Lancement des tests</h2>
+<p>Pour vérifier les tests, je réalise 2 méthodes :</p><ul>
+<li>Lancement des tests créés ci-dessus, en utilisant la commande : <div class="fragment"><div class="line">php artisan test </div>
+</div><!-- fragment --></li>
+<li>Lancement de l'application, pour des tests manuels de fonctionnement, en utilisant la commande : <div class="fragment"><div class="line">php artisan serve</div>
+</div><!-- fragment --></li>
+</ul>
+<p>A ce stade, nous avons un projet répondant au cahier des charges primaire :</p><ul>
+<li>Zone d'administration avec création d'un compte ou connection ;</li>
+<li>Un tableau affichant les liens courts et pagination ;</li>
+<li>Possibilité de copier le lien court (BONUS) ;</li>
+<li>Gestion des liens, ajout, suppression et édition ;</li>
+<li>Redirection de l'URL avec endpoint fonctionnel ;</li>
+<li>Les liens supprimés n'affichent pas une 404 (BONUS) ;</li>
+<li><a class="el" href="namespace_tests.html">Tests</a> unitaires et fonctionnels.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md23"></a>
+5. Réalisation des bonus</h1>
+<p>Création de la branche Git "Bonus-ShortUrl" </p><div class="fragment"><div class="line">git checkout -b Bonus-ShortUrl</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md24"></a>
+5.1. Compteur</h2>
+<p>Pour réaliser cela, nous allons venir créer une nouvelle migration. </p><div class="fragment"><div class="line">php artisan make:migration add_clicks_to_short_urls_table --table=short_urls</div>
+</div><!-- fragment --><p> Une fois la migration construite comme ci-dessous, nous réaliserons une migration. </p><div class="fragment"><div class="line">public function up(): void</div>
+<div class="line">{</div>
+<div class="line">    Schema::table(&#39;short_urls&#39;, function (Blueprint $table) {</div>
+<div class="line">        $table-&gt;unsignedBigInteger(&#39;clicks&#39;)-&gt;default(0);</div>
+<div class="line">    });</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">public function down(): void</div>
+<div class="line">{</div>
+<div class="line">    Schema::table(&#39;short_urls&#39;, function (Blueprint $table) {</div>
+<div class="line">        $table-&gt;dropColumn(&#39;clicks&#39;);</div>
+<div class="line">    });</div>
+<div class="line">}</div>
+</div><!-- fragment --><p> Maintenant, je vais pouvoir modifier mon controller "ShortUrlController" en ajoutant la méthode ci-dessous : </p><div class="fragment"><div class="line">public function incrementClicks(ShortUrl $shortUrl)</div>
+<div class="line">{</div>
+<div class="line">    $shortUrl-&gt;increment(&#39;clicks&#39;);</div>
+<div class="line">    $shortUrl-&gt;refresh(); // Recharge le modèle avec la nouvelle valeur</div>
+<div class="line"> </div>
+<div class="line">    return response()-&gt;json([</div>
+<div class="line">        &#39;success&#39; =&gt; true,</div>
+<div class="line">        &#39;clicks&#39; =&gt; $shortUrl-&gt;clicks  // ← Nouveau compteur</div>
+<div class="line">    ]);</div>
+<div class="line">}</div>
+</div><!-- fragment --><p> Elle fonctionne en 3 étapes simples pour garantir que le JavaScript qui sera préparer dans la view index reçoive toujours le compteur à jour.</p><ul>
+<li>Insère le compteur de 1 directement en base de données.</li>
+<li>Recharge le modèle depuis la base de données.</li>
+<li>Retourne le nouveau compteur au format JSON.</li>
+</ul>
+<p>Du coup maintenant, je vais modifier ma view index pour ajouter le script suivant : </p><div class="fragment"><div class="line">// Incrémenter pour le lien</div>
+<div class="line">                document.addEventListener(&#39;DOMContentLoaded&#39;, function() {</div>
+<div class="line">                    document.querySelectorAll(&#39;.short-url-link&#39;).forEach(link =&gt; {</div>
+<div class="line">                        link.addEventListener(&#39;click&#39;, function(e) {</div>
+<div class="line">                            e.preventDefault();</div>
+<div class="line">                            const url = this.dataset.url;</div>
+<div class="line">                            const id = this.dataset.id;</div>
+<div class="line">                            incrementClicks(id).then(() =&gt; {</div>
+<div class="line">                                window.open(url, &#39;_blank&#39;);</div>
+<div class="line">                            });</div>
+<div class="line">                        });</div>
+<div class="line">                    });</div>
+<div class="line"> </div>
+<div class="line">// Incrémenter pour copier</div>
+<div class="line">                    document.querySelectorAll(&#39;.btn-copy&#39;).forEach(btn =&gt; {</div>
+<div class="line">                        btn.addEventListener(&#39;click&#39;, async function() {</div>
+<div class="line">                            const url = this.dataset.url;</div>
+<div class="line">                            const id = this.dataset.id;</div>
+<div class="line">                            try {</div>
+<div class="line">                                await incrementClicks(id);</div>
+<div class="line">                                navigator.clipboard.writeText(url);</div>
+<div class="line">                                this.innerHTML = &#39;&lt;i class=&quot;fas fa-check&quot;&gt;&lt;/i&gt; Copié !&#39;;</div>
+<div class="line">                                setTimeout(() =&gt; this.innerHTML = &#39;&lt;i class=&quot;fas fa-copy&quot;&gt;&lt;/i&gt; Copier&#39;, 2000);</div>
+<div class="line">                            } catch (error) {</div>
+<div class="line">                                console.error(&#39;Erreur:&#39;, error);</div>
+<div class="line">                            }</div>
+<div class="line">                        });</div>
+<div class="line">                    });</div>
+<div class="line"> </div>
+<div class="line">// Rend la fonction ACCESSIBLE PARTOUT dans la page</div>
+<div class="line">                    window.incrementClicks = async function(id) {  </div>
+<div class="line">                        const response = await fetch(`/shorturls/${id}/increment-clicks`, {</div>
+<div class="line">                            method: &#39;POST&#39;,</div>
+<div class="line">                            headers: {</div>
+<div class="line">                                &#39;Content-Type&#39;: &#39;application/json&#39;,</div>
+<div class="line">                                &#39;X-CSRF-TOKEN&#39;: document.querySelector(&#39;meta[name=&quot;csrf-token&quot;]&#39;).getAttribute(&#39;content&#39;)</div>
+<div class="line">                            }</div>
+<div class="line">                        });</div>
+<div class="line">                        const data = await response.json();</div>
+<div class="line"> </div>
+<div class="line">// Mise à jour instantannée du compteur avec un petit effet visuel</div>
+<div class="line">                        if (data.success &amp;&amp; data.clicks !== undefined) {</div>
+<div class="line">                            const counterElement = document.querySelector(`.clicks-count[data-id=&quot;${id}&quot;]`);</div>
+<div class="line">                            if (counterElement) {</div>
+<div class="line">                                counterElement.textContent = data.clicks;</div>
+<div class="line">                                counterElement.style.color = &#39;#10b981&#39;;</div>
+<div class="line">                                setTimeout(() =&gt; counterElement.style.color = &#39;&#39;, 500);</div>
+<div class="line">                            }</div>
+<div class="line">                        }</div>
+<div class="line">                        </div>
+<div class="line">                        return data;</div>
+<div class="line">                    };</div>
+<div class="line">                });</div>
+</div><!-- fragment --><p>Maintenant pour un bon fonctionnement, on va modifier l'HTML pour intégrer les data-id et data-url. </p><div class="fragment"><div class="line">&lt;a href=&quot;#&quot; class=&quot;me-2 short-url-link&quot; data-url=&quot;{{ $shortUrlFull }}&quot; data-id=&quot;{{ $shortUrl-&gt;id }}&quot;&gt;{{ $shortUrlFull }}&lt;/a&gt;</div>
+<div class="line">&lt;button type=&quot;button&quot; class=&quot;btn btn-sm btn-outline-secondary btn-copy&quot; data-url=&quot;{{ $shortUrlFull }}&quot; data-id=&quot;{{ $shortUrl-&gt;id }}&quot;&gt;</div>
+<div class="line">    &lt;i class=&quot;fas fa-copy&quot;&gt;&lt;/i&gt; Copier</div>
+<div class="line">&lt;/button&gt;</div>
+</div><!-- fragment --><p> Et on fait pareil pour le champ du compteur : </p><div class="fragment"><div class="line">&lt;span class=&quot;clicks-count&quot; data-id=&quot;{{ $shortUrl-&gt;id }}&quot;&gt;{{ $shortUrl-&gt;clicks }}&lt;/span&gt;</div>
+</div><!-- fragment --><p> Maintenant, nous avons un compteur fonctionnel qui s'incrémente quand on copie le lien court ou alors quand on clique sur celui-ci.</p>
+<h2><a class="anchor" id="autotoc_md25"></a>
+5.2. Cron de suppression automatique</h2>
+<p>Pour réaliser cela, nous allons venir créer une nouvelle migration. </p><div class="fragment"><div class="line">php artisan make:migration add_last_used_at_to_short_urls_table --table=short_urls</div>
+</div><!-- fragment --><p> Dans cette migration, on vient ajouter un champ date "last_used_at". Dans lequel, on ajoutera la date de dernière utilisation au clic sur l'url courte ou le bouton copier.</p>
+<p>En conséquence, je vais venir modifier la méthode du compteur dans mon controller afin d'ajouter la date du jour : </p><div class="fragment"><div class="line">// Ajoute la date et l&#39;heure au moment du clique</div>
+<div class="line">$shortUrl-&gt;last_used_at = now();</div>
+<div class="line">// Force l&#39;enregistrement avant le refresh</div>
+<div class="line">$shortUrl-&gt;save();</div>
+</div><!-- fragment --><p>Maintenant, nous pouvons créer une nouvelle commande pour supprimer les urls qui n'ont pas été utilisées depuis plus de 30 jours. </p><div class="fragment"><div class="line">php artisan make:command CleanOldShortUrls</div>
+</div><!-- fragment --><p> Cela, nous permet de créer le fichier <a class="el" href="_clean_old_short_urls_8php.html">app/Console/Commands/CleanOldShortUrls.php</a> Dans celui-ci, nous allons pouvoir configurer la commande suivante : </p><div class="fragment"><div class="line">public function handle()</div>
+<div class="line">    {</div>
+<div class="line">        $deleted = ShortUrl::where(function ($query) {</div>
+<div class="line">            $query-&gt;Where(&#39;last_used_at&#39;, &#39;&lt;&#39;, now()-&gt;subMonths(3));</div>
+<div class="line">        })-&gt;delete();</div>
+<div class="line"> </div>
+<div class="line">        $this-&gt;info(&quot;{$deleted} short URLs supprimées (non utilisées depuis +3 mois)&quot;);</div>
+<div class="line"> </div>
+<div class="line">        return 0;</div>
+<div class="line">    }</div>
+</div><!-- fragment --><p> Pour finir dans <a class="el" href="console_8php.html">routes/console.php</a>, nous allons configurer la commande qui exécutera automatiquement la suppression. </p><div class="fragment"><div class="line">Schedule::command(&#39;shorturls:clean&#39;)-&gt;daily()-&gt;withoutOverlapping();</div>
+</div><!-- fragment --><p>Nous pouvons tester le fonctionnement final via les commandes suivantes : </p><div class="fragment"><div class="line"># Test si la commande fonctionne déjà</div>
+<div class="line">php artisan shorturls:clean</div>
+<div class="line"> </div>
+<div class="line"># Test si planning est configuré</div>
+<div class="line">php artisan schedule:list</div>
+<div class="line"># → shorturls:clean → daily @ 00:00</div>
+<div class="line"> </div>
+<div class="line"># Test du scheduler</div>
+<div class="line">php artisan schedule:run</div>
+</div><!-- fragment --><p>A ce stade, nous avons un projet répondant au cahier des charges primaire :</p><ul>
+<li>Zone d'administration avec création d'un compte ou connection ;</li>
+<li>Un tableau affichant les liens courts et pagination ;</li>
+<li>Possibilité de copier le lien court (BONUS) ;</li>
+<li>Gestion des liens, ajout, suppression et édition ;</li>
+<li>Redirection de l'URL avec endpoint fonctionnel ;</li>
+<li>Les liens supprimés n'affichent pas une 404 (BONUS) ;</li>
+<li><a class="el" href="namespace_tests.html">Tests</a> unitaires et fonctionnels ;</li>
+<li>Compteur de clic lien court et copie (BONUS) ;</li>
+<li>Cron de suppression automatique des liens pas cliquer/copier depuis +3 mois.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md26"></a>
+6. Génération des images pour utilisation sous Docker/Podman</h1>
+<h2><a class="anchor" id="autotoc_md27"></a>
+6.1. Edition d'un Dockerfile</h2>
+<div class="fragment"><div class="line">FROM php:8.3-fpm</div>
+<div class="line"> </div>
+<div class="line"># Installation des dépendances système et extensions PHP pour Laravel</div>
+<div class="line">RUN apt-get update &amp;&amp; apt-get install -y \</div>
+<div class="line">    git \</div>
+<div class="line">    curl \</div>
+<div class="line">    libpng-dev \</div>
+<div class="line">    libonig-dev \</div>
+<div class="line">    libxml2-dev \</div>
+<div class="line">    zip \</div>
+<div class="line">    unzip \</div>
+<div class="line">    libzip-dev</div>
+<div class="line"> </div>
+<div class="line">RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip</div>
+<div class="line"> </div>
+<div class="line"># Installation de Composer</div>
+<div class="line">COPY --from=composer:latest /usr/bin/composer /usr/bin/composer</div>
+<div class="line"> </div>
+<div class="line">WORKDIR /var/www</div>
+<div class="line">COPY . /var/www</div>
+<div class="line">COPY --from=composer:latest /usr/bin/composer /usr/bin/composer</div>
+<div class="line"> </div>
+<div class="line">RUN composer install --optimize-autoloader --no-dev</div>
+<div class="line">RUN chown -R www-data:www-data /var/www</div>
+<div class="line">RUN chmod -R 755 /var/www/storage /var/www/bootstrap/cache</div>
+</div><!-- fragment --> <h2><a class="anchor" id="autotoc_md28"></a>
+6.2. Edition d'un docker-compose</h2>
+<div class="fragment"><div class="line">services:</div>
+<div class="line">  app:</div>
+<div class="line">    build:</div>
+<div class="line">      context: .</div>
+<div class="line">      dockerfile: Dockerfile</div>
+<div class="line">    image: laravel-app</div>
+<div class="line">    container_name: laravel_app</div>
+<div class="line">    restart: unless-stopped</div>
+<div class="line">    working_dir: /var/www</div>
+<div class="line">    volumes:</div>
+<div class="line">      - ./:/var/www  # Code source</div>
+<div class="line">      - ./database:/database  # Dossier pour SQLite</div>
+<div class="line">    networks:</div>
+<div class="line">      - laravel</div>
+<div class="line">    environment:</div>
+<div class="line">      - DB_CONNECTION=sqlite</div>
+<div class="line">      - DB_DATABASE=/database/database.sqlite</div>
+<div class="line"> </div>
+<div class="line">  nginx:</div>
+<div class="line">    image: nginx:alpine</div>
+<div class="line">    container_name: laravel_nginx</div>
+<div class="line">    restart: unless-stopped</div>
+<div class="line">    ports:</div>
+<div class="line">      - &quot;8000:80&quot;</div>
+<div class="line">    volumes:</div>
+<div class="line">      - ./:/var/www</div>
+<div class="line">      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf</div>
+<div class="line">    networks:</div>
+<div class="line">      - laravel</div>
+<div class="line">    depends_on:</div>
+<div class="line">      - app</div>
+<div class="line"> </div>
+<div class="line">networks:</div>
+<div class="line">  laravel:</div>
+<div class="line">    driver: bridge</div>
+</div><!-- fragment --> <h2><a class="anchor" id="autotoc_md29"></a>
+6.3. Fichier Nginx pour servir Laravel</h2>
+<div class="fragment"><div class="line">server {</div>
+<div class="line">    listen 80;</div>
+<div class="line">    index index.php index.html;</div>
+<div class="line">    error_log  /var/log/nginx/error.log;</div>
+<div class="line">    access_log /var/log/nginx/access.log;</div>
+<div class="line">    root /var/www/public;</div>
+<div class="line"> </div>
+<div class="line">    location ~ \.php$ {</div>
+<div class="line">        try_files $uri =404;</div>
+<div class="line">        fastcgi_split_path_info ^(.+\.php)(/.+)$;</div>
+<div class="line">        fastcgi_pass app:9000;</div>
+<div class="line">        fastcgi_index index.php;</div>
+<div class="line">        include fastcgi_params;</div>
+<div class="line">        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;</div>
+<div class="line">        fastcgi_param PATH_INFO $fastcgi_path_info;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    location / {</div>
+<div class="line">        try_files $uri $uri/ /index.php?$query_string;</div>
+<div class="line">        gzip_static on;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --> <h2><a class="anchor" id="autotoc_md30"></a>
+6.4. Commandes de préparation de la BD sqlite</h2>
+<div class="fragment"><div class="line">mkdir -p database</div>
+<div class="line">touch database/database.sqlite</div>
+<div class="line">chmod 666 database/database.sqlite  # Permissions pour www-data</div>
+</div><!-- fragment --> <h2><a class="anchor" id="autotoc_md31"></a>
+6.5. Commandes de lancement du Docker</h2>
+<div class="fragment"><div class="line">docker-compose up -d --build  # Reconstruit sans MySQL</div>
+<div class="line">docker-compose exec app php artisan key:generate</div>
+<div class="line">docker-compose exec app php artisan migrate</div>
+</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Généré le Samedi 7 Février 2026 12:00:11 pour URL Shortener par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

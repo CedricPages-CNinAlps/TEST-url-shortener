@@ -1,0 +1,8 @@
+<map id="App\Http\Requests\Auth\LoginRequest\authenticate" name="App\Http\Requests\Auth\LoginRequest\authenticate">
+<area shape="rect" id="Node000001" title="Attempt to authenticate the request&#39;s credentials." alt="" coords="5,49,223,94"/>
+<area shape="rect" id="Node000002" href="$class_app_1_1_http_1_1_requests_1_1_auth_1_1_login_request.html#a673cadc2bf050f1c139636c261bc996e" title="Ensure the login request is not rate limited." alt="" coords="271,5,521,68"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="223,55,257,51,257,56,223,61"/>
+<area shape="rect" id="Node000003" href="$class_app_1_1_http_1_1_requests_1_1_auth_1_1_login_request.html#aea2a6943931bedd74179057a5d67bb5c" title="Get the rate limiting throttle key for the request." alt="" coords="569,49,776,94"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="223,75,271,77,396,79,521,77,556,75,556,81,521,82,396,84,271,82,223,80"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="522,50,556,54,556,59,521,55"/>
+</map>

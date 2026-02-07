@@ -1,0 +1,9 @@
+<map id="Database\Factories\UserFactory" name="Database\Factories\UserFactory">
+<area shape="rect" id="Node000001" title="\Databaseloquent\Factories\Factory&lt;\App\Models\User&gt;" alt="" coords="69,144,222,257"/>
+<area shape="rect" id="Node000002" href="$class_illuminate.html" title=" " alt="" coords="5,5,88,79"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="78,89,113,142,108,145,74,91"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="112,5,179,79"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="148,92,148,144,143,144,143,92"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="203,5,298,79"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="229,80,194,132,190,129,225,77"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="App\Console\Commands\CleanOldShortUrls" name="App\Console\Commands\CleanOldShortUrls">
+<area shape="rect" id="Node000001" title="Clean up expired short URLs." alt="" coords="5,127,199,240"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="58,5,146,79"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,92,105,126,99,126,99,92"/>
+</map>

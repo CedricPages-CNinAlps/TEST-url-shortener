@@ -1,0 +1,25 @@
+<map id="BaseTestCase" name="BaseTestCase">
+<area shape="rect" id="Node000001" title=" " alt="" coords="1165,5,1284,79"/>
+<area shape="rect" id="Node000002" href="$class_tests_1_1_test_case.html" title=" " alt="" coords="1163,127,1286,200"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1227,92,1227,126,1222,126,1222,92"/>
+<area shape="rect" id="Node000003" href="$class_tests_1_1_feature_1_1_auth_1_1_authentication_test.html" title=" " alt="" coords="5,277,236,505"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="1149,167,946,169,683,179,550,190,428,204,325,224,283,237,250,250,209,279,206,274,247,246,282,232,324,219,427,199,550,184,683,174,946,163,1149,161"/>
+<area shape="rect" id="Node000004" href="$class_tests_1_1_feature_1_1_auth_1_1_email_verification_test.html" title=" " alt="" coords="261,305,493,476"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="1149,169,996,176,809,191,715,201,630,215,558,231,506,250,469,276,437,307,433,303,466,271,503,246,557,226,629,209,715,196,808,185,996,171,1149,164"/>
+<area shape="rect" id="Node000005" href="$class_tests_1_1_feature_1_1_auth_1_1_password_confirmation_test.html" title=" " alt="" coords="517,288,745,493"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="1150,175,1050,186,936,203,831,225,789,237,758,250,732,268,708,290,704,286,728,264,755,246,787,232,829,220,935,198,1049,181,1149,169"/>
+<area shape="rect" id="Node000006" href="$class_tests_1_1_feature_1_1_auth_1_1_password_reset_test.html" title=" " alt="" coords="769,268,997,513"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="1151,186,1080,212,1044,230,1010,250,985,270,982,266,1007,246,1041,225,1078,207,1149,181"/>
+<area shape="rect" id="Node000007" href="$class_tests_1_1_feature_1_1_auth_1_1_password_update_test.html" title=" " alt="" coords="1021,308,1212,473"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="1204,214,1158,309,1153,307,1199,211"/>
+<area shape="rect" id="Node000008" href="$class_tests_1_1_feature_1_1_auth_1_1_registration_test.html" title=" " alt="" coords="1236,317,1432,465"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="1250,211,1301,315,1296,317,1246,214"/>
+<area shape="rect" id="Node000009" href="$class_tests_1_1_feature_1_1_example_test.html" title=" " alt="" coords="1456,337,1663,445"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="1300,180,1374,206,1411,224,1446,246,1492,288,1529,335,1524,338,1488,292,1443,250,1409,229,1371,211,1298,185"/>
+<area shape="rect" id="Node000010" href="$class_tests_1_1_feature_1_1_profile_test.html" title=" " alt="" coords="1687,248,1978,533"/>
+<area shape="poly" id="edge9_Node000002_Node000010" title=" " alt="" coords="1300,164,1381,170,1477,184,1579,208,1629,225,1676,246,1688,252,1686,257,1674,250,1627,230,1577,213,1476,189,1380,175,1300,169"/>
+<area shape="rect" id="Node000011" href="$class_tests_1_1_feature_1_1_redirect_test.html" title=" " alt="" coords="2002,305,2207,476"/>
+<area shape="poly" id="edge10_Node000002_Node000011" title=" " alt="" coords="1300,163,1463,168,1664,181,1765,192,1857,206,1934,224,1991,246,2027,271,2056,303,2052,307,2023,275,1989,250,1933,229,1856,211,1764,197,1664,187,1463,174,1300,168"/>
+<area shape="rect" id="Node000012" href="$class_tests_1_1_feature_1_1_short_url_test.html" title=" " alt="" coords="2232,305,2447,476"/>
+<area shape="poly" id="edge11_Node000002_Node000012" title=" " alt="" coords="1300,161,1507,162,1776,172,1912,182,2037,197,2143,218,2186,231,2221,246,2257,271,2288,303,2284,307,2254,275,2218,250,2184,236,2142,223,2036,202,1911,187,1775,177,1506,167,1300,166"/>
+</map>

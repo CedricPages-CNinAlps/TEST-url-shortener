@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>URL Shortener: TEST-url-shortener</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">URL Shortener<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">A Laravel-based URL shortener application</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('index.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">TEST-url-shortener </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="md__2home_2runner_2work_2_t_e_s_t-url-shortener_2_t_e_s_t-url-shortener_2_readme"></a> Ce projet est un raccourcisseur d'URL en Laravel 12 et PHP &gt;= 8.2. Il permet de créer des liens courts, de les visualiser dans une page d'accueil, de les supprimer, de les modifier, et de les rediriger vers l'URL originale.</p>
+<p>Il utilise la base de données SQLite, l'Authentification simple via Laravel Breeze, et des tests unitaires et fonctionnels. Vous pouvez retrouver mon processus de développement ici : <a class="el" href="md__2home_2runner_2work_2_t_e_s_t-url-shortener_2_t_e_s_t-url-shortener_2_proc_x_c3_x_a9dure__d_x_c3_x_a9veloppement.html">Procédure_développement.md</a></p>
+<p>Pour initialiser et installer le projet, exécutez les commandes suivantes :</p>
+<ol type="1">
+<li>Initialisation du projet <div class="fragment"><div class="line"> git clone https://github.com/CedricPages-CNinAlps/TEST-url-shortener.git</div>
+<div class="line"> # Se déplacer dans le répertoire du projet</div>
+<div class="line">cd TEST-url-shortener</div>
+</div><!-- fragment --></li>
+<li>Installation et Configuration <div class="fragment"><div class="line"># Installer les dépendances PHP</div>
+<div class="line">composer install</div>
+<div class="line"> </div>
+<div class="line"># Copier le fichier d&#39;environnement</div>
+<div class="line">cp .env.example .env</div>
+<div class="line"> </div>
+<div class="line"># Générer la clé d&#39;application</div>
+<div class="line">php artisan key:generate</div>
+<div class="line"> </div>
+<div class="line"># Configurer la base de données SQLite</div>
+<div class="line">touch database/database.sqlite</div>
+<div class="line">echo &quot;DB_CONNECTION=sqlite&quot; &gt;&gt; .env</div>
+<div class="line">echo &quot;DB_DATABASE=&quot;$(pwd)&quot;/database/database.sqlite&quot; &gt;&gt; .env</div>
+<div class="line"> </div>
+<div class="line"># Installer les dépendances front-end</div>
+<div class="line">npm install</div>
+<div class="line">npm run build</div>
+<div class="line"> </div>
+<div class="line"># Configurer le cache de l&#39;application</div>
+<div class="line">php artisan config:cache</div>
+</div><!-- fragment --></li>
+<li>Mise en place des Modèles et <a class="el" href="class_migration.html">Migration</a> <div class="fragment"><div class="line"># Exécuter les migrations</div>
+<div class="line">php artisan migrate</div>
+<div class="line"> </div>
+<div class="line"># Optionnel : Lancer les seeders pour les données de test</div>
+<div class="line">php artisan db:seed</div>
+<div class="line">#Chaque user créer aura le mot de passe &#39;0123456789&#39;</div>
+<div class="line"> </div>
+<div class="line"># Créer le lien de stockage</div>
+<div class="line">php artisan storage:link</div>
+</div><!-- fragment --></li>
+<li>Mise en place des tests unitaires / fonctionnels <div class="fragment"><div class="line"> # Lancer les tests</div>
+<div class="line">php artisan test</div>
+<div class="line"> </div>
+<div class="line"># Pour lancer les tests avec couverture de code</div>
+<div class="line">php artisan test --coverage</div>
+</div><!-- fragment --></li>
+<li>Démarrer le serveur de développement <div class="fragment"><div class="line"># Démarrer le serveur</div>
+<div class="line">php artisan serve</div>
+<div class="line"> </div>
+<div class="line"># L&#39;application sera disponible à l&#39;adresse : http://127.0.0.1:8000</div>
+</div><!-- fragment --></li>
+<li>Génération de la documentation Attention pour la génération, il faut <a href="https://www.doxygen.nl/download.html">Doxygen</a> et <a href="https://graphviz.org/download/">Graphviz</a> <div class="fragment"><div class="line"># Aller dans le dossier &quot;Documentation&quot;</div>
+<div class="line">cd Documentation</div>
+<div class="line"> </div>
+<div class="line"># Lancer la création de la documentation</div>
+<div class="line">Doxygen Doxyfile</div>
+</div><!-- fragment --> La documentation sera accessible dans le <a href="./Documentation/docs/html/index.html">lien : ./Documentation/docs/html/index.html</a> En fonction de votre IDE, un clis droit et ouvrir dans le navigateur.</li>
+</ol>
+<p>Sinon, celle-ci est disponible directement dans la page <a href="https://cedricpages-cninalps.github.io/TEST-url-shortener/">https://cedricpages-cninalps.github.io/TEST-url-shortener/</a></p>
+<ol type="1">
+<li>Utilisation de l'image Docker <div class="fragment"><div class="line"># Préparation du Fichier SQLite</div>
+<div class="line">touch database/database.sqlite</div>
+<div class="line">chmod 666 database/database.sqlite  # Permissions pour www-data</div>
+<div class="line"> </div>
+<div class="line"># Commandes de Lancement</div>
+<div class="line">docker-compose up -d --build  # Construit le setup </div>
+<div class="line">docker-compose exec app php artisan key:generate</div>
+<div class="line">docker-compose exec app php artisan migrate</div>
+</div><!-- fragment --> Accédez à <a href="http://localhost:8000">http://localhost:8000</a> pour voir l'application. Par la suite, vous pouvez utiliser les commandes utilent ci-dessous : <div class="fragment"><div class="line"># Arrête les services</div>
+<div class="line">docker-compose stop</div>
+<div class="line"># Relance les mêmes services à l&#39;identique</div>
+<div class="line">docker-compose start</div>
+<div class="line"># Arrête + redémarre en une commande</div>
+<div class="line">docker-compose restart</div>
+<div class="line"># Arrête ET supprime les conteneurs + réseaux</div>
+<div class="line">docker-compose down</div>
+<div class="line"># Supprime aussi les volumes (SQLite sera effacé !).</div>
+<div class="line">docker-compose down -v</div>
+</div><!-- fragment --> </li>
+</ol>
+</div></div><!-- PageDoc -->
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Généré le Samedi 7 Février 2026 12:00:11 pour URL Shortener par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

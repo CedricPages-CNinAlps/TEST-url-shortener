@@ -1,0 +1,5 @@
+<map id="Database\Factories\ShortUrlFactory\definition" name="Database\Factories\ShortUrlFactory\definition">
+<area shape="rect" id="Node000001" title="Define the model&#39;s default state." alt="" coords="5,5,212,51"/>
+<area shape="rect" id="Node000002" href="$class_database_1_1_factories_1_1_short_url_factory.html#a8e5670b65674eab5e1bb0d258458d860" title="Generate a 6&#45;character alphanumeric code." alt="" coords="260,5,603,51"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="212,25,246,25,246,31,212,31"/>
+</map>

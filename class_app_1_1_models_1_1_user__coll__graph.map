@@ -1,0 +1,5 @@
+<map id="App\Models\User" name="App\Models\User">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,127,143,223"/>
+<area shape="rect" id="Node000002" href="$class_authenticatable.html" title=" " alt="" coords="11,5,137,79"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="77,93,77,127,71,127,71,93"/>
+</map>

@@ -1,0 +1,10 @@
+<map id="App\Http\Controllers\Auth\AuthenticatedSessionController\store" name="App\Http\Controllers\Auth\AuthenticatedSessionController\store">
+<area shape="rect" id="Node000001" title="Handle an incoming authentication request." alt="" coords="5,49,333,94"/>
+<area shape="rect" id="Node000002" href="$class_app_1_1_http_1_1_requests_1_1_auth_1_1_login_request.html#a7be4cc5f6c415464b716807cc1b862ce" title="Attempt to authenticate the request&#39;s credentials." alt="" coords="381,49,599,94"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="333,69,368,69,368,74,333,74"/>
+<area shape="rect" id="Node000003" href="$class_app_1_1_http_1_1_requests_1_1_auth_1_1_login_request.html#a673cadc2bf050f1c139636c261bc996e" title="Ensure the login request is not rate limited." alt="" coords="647,5,897,68"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="599,55,633,51,633,56,599,61"/>
+<area shape="rect" id="Node000004" href="$class_app_1_1_http_1_1_requests_1_1_auth_1_1_login_request.html#aea2a6943931bedd74179057a5d67bb5c" title="Get the rate limiting throttle key for the request." alt="" coords="945,49,1152,94"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="599,75,647,77,772,79,897,77,932,75,932,81,897,82,772,84,647,82,599,80"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="898,50,932,54,932,59,897,55"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="Database\Seeders\DatabaseSeeder" name="Database\Seeders\DatabaseSeeder">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,127,225,217"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="82,5,149,79"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="118,92,118,126,113,126,113,92"/>
+</map>

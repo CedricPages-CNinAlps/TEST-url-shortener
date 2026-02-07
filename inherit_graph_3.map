@@ -1,0 +1,25 @@
+<map id="Graphe hiérarchique des classes" name="Graphe hiérarchique des classes">
+<area shape="rect" id="Node000000" href="$class_base_test_case.html" title=" " alt="" coords="5,326,132,354"/>
+<area shape="rect" id="Node000001" href="$class_tests_1_1_test_case.html" title=" " alt="" coords="180,326,311,354"/>
+<area shape="poly" id="edge14_Node000000_Node000001" title=" " alt="" coords="146,337,180,337,180,343,146,343"/>
+<area shape="rect" id="Node000002" href="$class_tests_1_1_feature_1_1_auth_1_1_authentication_test.html" title=" " alt="" coords="389,5,546,51"/>
+<area shape="poly" id="edge15_Node000001_Node000002" title=" " alt="" coords="247,312,258,259,277,192,309,122,331,89,357,61,387,42,390,46,360,65,335,93,314,124,282,193,263,260,253,313"/>
+<area shape="rect" id="Node000003" href="$class_tests_1_1_feature_1_1_auth_1_1_email_verification_test.html" title=" " alt="" coords="380,75,555,120"/>
+<area shape="poly" id="edge16_Node000001_Node000003" title=" " alt="" coords="252,311,266,271,287,222,318,173,357,130,378,116,381,121,360,134,322,176,292,225,271,273,257,313"/>
+<area shape="rect" id="Node000004" href="$class_tests_1_1_feature_1_1_auth_1_1_password_confirmation_test.html" title=" " alt="" coords="359,144,576,189"/>
+<area shape="poly" id="edge17_Node000001_Node000004" title=" " alt="" coords="259,313,298,256,326,225,357,199,378,187,381,192,360,204,329,229,302,259,263,316"/>
+<area shape="rect" id="Node000005" href="$class_tests_1_1_feature_1_1_auth_1_1_password_reset_test.html" title=" " alt="" coords="383,213,551,259"/>
+<area shape="poly" id="edge18_Node000001_Node000005" title=" " alt="" coords="276,316,314,292,358,268,387,256,389,261,360,273,317,296,279,320"/>
+<area shape="rect" id="Node000006" href="$class_tests_1_1_feature_1_1_auth_1_1_password_update_test.html" title=" " alt="" coords="378,283,557,328"/>
+<area shape="poly" id="edge19_Node000001_Node000006" title=" " alt="" coords="324,325,377,317,378,322,325,330"/>
+<area shape="rect" id="Node000007" href="$class_tests_1_1_feature_1_1_auth_1_1_registration_test.html" title=" " alt="" coords="390,352,545,397"/>
+<area shape="poly" id="edge20_Node000001_Node000007" title=" " alt="" coords="325,350,390,360,389,365,324,355"/>
+<area shape="rect" id="Node000008" href="$class_tests_1_1_feature_1_1_example_test.html" title=" " alt="" coords="360,422,575,450"/>
+<area shape="poly" id="edge21_Node000001_Node000008" title=" " alt="" coords="278,360,316,384,360,407,397,419,395,424,358,412,313,389,275,364"/>
+<area shape="rect" id="Node000009" href="$class_tests_1_1_feature_1_1_profile_test.html" title=" " alt="" coords="369,474,566,502"/>
+<area shape="poly" id="edge22_Node000001_Node000009" title=" " alt="" coords="265,364,305,413,331,438,360,459,388,471,385,476,357,464,327,442,301,416,261,367"/>
+<area shape="rect" id="Node000010" href="$class_tests_1_1_feature_1_1_redirect_test.html" title=" " alt="" coords="362,526,573,554"/>
+<area shape="poly" id="edge23_Node000001_Node000010" title=" " alt="" coords="259,366,274,400,296,439,325,478,360,511,384,524,381,528,357,516,321,482,292,442,269,402,254,368"/>
+<area shape="rect" id="Node000011" href="$class_tests_1_1_feature_1_1_short_url_test.html" title=" " alt="" coords="362,578,573,606"/>
+<area shape="poly" id="edge24_Node000001_Node000011" title=" " alt="" coords="255,367,267,410,288,464,319,518,338,542,360,563,381,576,378,580,357,567,334,546,314,521,283,466,262,412,250,368"/>
+</map>
