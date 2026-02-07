@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\ShortUrl;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Random\RandomException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -17,6 +19,7 @@ use Illuminate\Http\JsonResponse;
  */
 class ShortUrlController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Instance of the authenticated user.
      * Stored as a property to avoid repeated calls to Auth::user().
@@ -117,17 +120,15 @@ class ShortUrlController extends Controller
     /**
      * Display the form to edit a shortened URL.
      *
-     * @param  ShortUrl $shortUrl The shortened URL to edit
-     * @param  int $id The ID of the shortened URL
+     * @param  int $id The ID of the shortened URL to edit
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory The view or factory
      */
-    public function edit(ShortUrl $id): Factory|View
+    public function edit($id): Factory|View
     {
-        if ($id->user_id !== $this->user->id) {
-            abort(403);
-        }
+        $shortUrl = ShortUrl::findOrFail($id);
+        $this->authorize('update', $shortUrl);
 
-        return view('shorturls.edit', ['shortUrl' => $id]);
+        return view('shorturls.edit', ['shortUrl' => $shortUrl]);
     }
 
     /**
@@ -138,20 +139,19 @@ class ShortUrlController extends Controller
      * The method redirects the user to the list of shortened URLs page with a success message.
      *
      * @param  \Illuminate\Http\Request  $request The request object containing the original URL
-     * @param  ShortUrl $id The shortened URL to update
+     * @param  int $id The ID of the shortened URL to update
      * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse The view or redirect response
      */
-    public function update(Request $request, ShortUrl $id): View|RedirectResponse
+    public function update(Request $request, $id): View|RedirectResponse
     {
-        if ($id->user_id !== $this->user->id) {
-            abort(403);
-        }
+        $shortUrl = ShortUrl::findOrFail($id);
+        $this->authorize('update', $shortUrl);
 
         $request->validate([
             'original_url' => ['required', 'url'],
         ]);
 
-        $id->update([
+        $shortUrl->update([
             'original_url' => $request->input('original_url'),
         ]);
 
@@ -163,16 +163,15 @@ class ShortUrlController extends Controller
      * The method deletes the shortened URL and removes the object from the database.
      * The method redirects the user to the list of shortened URLs page with a success message.
      *
-     * @param  \App\Models\ShortUrl $id The shortened URL to delete (type hint)
-     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse The view or redirect response (type hint)
+     * @param  int $id The ID of the shortened URL to delete
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse The view or redirect response
      */
-    public function destroy(ShortUrl $id): View|RedirectResponse
+    public function destroy($id): View|RedirectResponse
     {
-        if ($id->user_id !== $this->user->id) {
-            abort(403);
-        }
+        $shortUrl = ShortUrl::findOrFail($id);
+        $this->authorize('delete', $shortUrl);
 
-        $id->delete();
+        $shortUrl->delete();
         return redirect()->route('shorturls.index')->with('status', 'Shortened URL deleted successfully.');
     }
 
